@@ -29,11 +29,11 @@ useHead({
   meta: [
     {
       name: 'theme-color',
-      content: colorMode.value === 'dark' ? '#212121' : '#ffffff',
+      content: colorMode.value === 'dark' ? '#18181b' : '#ffffff',
     },
     {
       name: 'background-color',
-      content: colorMode.value === 'dark' ? '#212121' : '#ffffff',
+      content: colorMode.value === 'dark' ? '#18181b' : '#ffffff',
     },
   ],
 })
