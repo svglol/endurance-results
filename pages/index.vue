@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col gap-6 justify-center items-center">
+  <div class="min-h-max flex flex-col gap-6 justify-center items-center">
     <div>
       <span
         class="text-6xl lg:text-9xl text-center flex flex-row gap-1 justify-center">

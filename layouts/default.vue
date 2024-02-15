@@ -1,8 +1,7 @@
 <template>
   <main class="main">
-    <!-- <slot /> -->
     <div
-      class="flex flex-col lg:grid lg:grid-cols-12 divide-x dark:divide-gray-800 divide-gray-200">
+      class="flex flex-col lg:grid lg:grid-cols-12 divide-x dark:divide-gray-800 divide-gray-200 min-h-screen">
       <MobileHeader class="lg:hidden" />
       <div class="hidden lg:block lg:col-span-2">
         <TheSidebar />
