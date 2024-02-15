@@ -5,13 +5,20 @@
       <span class="text-3xl text-center flex flex-row gap-1 justify-center">
         <UIcon name="noto:racing-car" />
         <UIcon name="noto:dashing-away" />
+        <span
+          class="text-base sm:text-lg font-light dark:text-white text-black my-auto">
+          Endurance Results
+        </span>
       </span>
     </NuxtLink>
-    <UButton
-      :icon="toggleMobileMenu ? 'i-heroicons-x-mark' : 'i-heroicons:bars-3'"
-      color="gray"
-      variant="ghost"
-      @click="toggleMobileMenu = !toggleMobileMenu" />
+    <div class="flex flex-row gap-2">
+      <DarkToggle />
+      <UButton
+        :icon="toggleMobileMenu ? 'i-heroicons-x-mark' : 'i-heroicons:bars-3'"
+        color="gray"
+        variant="ghost"
+        @click="toggleMobileMenu = !toggleMobileMenu" />
+    </div>
     <MobileMenu>
       <TheSidebar class="w-full sticky px-4 py-4" />
     </MobileMenu>

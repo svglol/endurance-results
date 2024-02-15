@@ -2,7 +2,7 @@
   <aside
     class="overflow-y-auto lg:block lg:max-h-screen lg:sticky py-4 lg:px-4 lg:top-0 lg:h-screen">
     <div class="flex flex-col gap-4 justify-between w-full">
-      <div class="relative flex flex-col gap-0">
+      <div class="hidden relative lg:flex flex-col gap-0">
         <div class="absolute right-0 top-0 z-20">
           <DarkToggle />
         </div>
