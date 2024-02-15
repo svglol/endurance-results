@@ -56,43 +56,7 @@ function csv2Array(input: string) {
     if (data.length > 1) {
       const obj = {} as any
       for (let j = 0; j < headers.length; j++) {
-        const substrings = ['ECM', 'EXTRA', 'Extra', 'LICENSE', 'COUNTRY']
-        const regex = new RegExp(substrings.join('|'))
-        if (
-          regex.test(headers[j]) ||
-          data[j] === '' ||
-          data[j] === null ||
-          data[j] === undefined
-        ) {
-          continue
-        }
-
-        const lastnamesubstrings = [
-          'DRIVER1 SECONDNAME',
-          'DRIVER2 SECONDNAME',
-          'DRIVER3 SECONDNAME',
-          'DRIVER4 SECONDNAME',
-          'DRIVER5 SECONDNAME',
-        ]
-        const lastnameregex = new RegExp(lastnamesubstrings.join('|'))
-        if (lastnameregex.test(headers[j])) {
-          continue
-        }
-        const firstnamesubstrings = [
-          'DRIVER1 FIRSTNAME',
-          'DRIVER2 FIRSTNAME',
-          'DRIVER3 FIRSTNAME',
-          'DRIVER4 FIRSTNAME',
-          'DRIVER5 FIRSTNAME',
-        ]
-        const firstnameregex = new RegExp(firstnamesubstrings.join('|'))
-        if (firstnameregex.test(headers[j])) {
-          obj[
-            headers[j].replace('FIRSTNAME', '').replace(/([A-Z])(\d)/g, '$1 $2')
-          ] = data[j] + ' ' + data[j + 1]
-        } else {
-          obj[headers[j]] = data[j]
-        }
+        obj[headers[j]] = data[j]
       }
       lines.push(obj)
     }
