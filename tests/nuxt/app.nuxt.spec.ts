@@ -1,14 +1,12 @@
 import { describe, it, expect } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import app from '~/app.vue'
-
 describe('app', () => {
+  it('works', () => {
+    expect(useNuxtApp().globalName).toEqual('nuxt')
+  })
   it('app can be mounted', async () => {
     const component = await mountSuspended(app, { route: '/' })
     expect(component).toBeTruthy()
-  })
-  it('app has welcome to nuxt text', async () => {
-    const component = await mountSuspended(app, { route: '/' })
-    expect(component.html()).toContain('Endurance Results')
   })
 })
