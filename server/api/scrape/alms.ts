@@ -11,17 +11,17 @@ export default defineEventHandler(async () => {
 
   // get series data from db
   let seriesData = await db.query.series.findFirst({
-    where: (series, { like }) => like(series.name, 'FIA WEC'),
+    where: (series, { like }) => like(series.name, 'ALMS'),
     with: { seasons: { with: { events: { with: { results: true } } } } },
   })
   if (!seriesData) {
     const id = crypto.randomUUID()
     await db.insert(series).values({
       id,
-      name: 'FIA WEC',
+      name: 'ALMS',
     })
     seriesData = await db.query.series.findFirst({
-      where: (series, { like }) => like(series.name, 'FIA WEC'),
+      where: (series, { like }) => like(series.name, 'ALMS'),
       with: { seasons: { with: { events: { with: { results: true } } } } },
     })
   }
@@ -43,9 +43,9 @@ export default defineEventHandler(async () => {
     filteredResults.map(({ season, event, results }) => {
       return Promise.all(
         results.map(result =>
-          $fetch<string>(`http://fiawec.alkamelsystems.com/${result}`).then(
+          $fetch<string>(`http://alms.alkamelsystems.com/${result}`).then(
             data => ({
-              url: `http://fiawec.alkamelsystems.com/${result}`,
+              url: `http://alms.alkamelsystems.com/${result}`,
               result: convertResultName(result),
               data: minifyCsv(data),
             })
@@ -142,11 +142,11 @@ export default defineEventHandler(async () => {
     })
   }
 
-  return { updatedFIAWEC: data.length }
+  return { updatedALMS: data.length }
 })
 
 async function getSeasonsWithEvents() {
-  const html = await $fetch<string>('http://fiawec.alkamelsystems.com/')
+  const html = await $fetch<string>('http://alms.alkamelsystems.com/')
   const page = parse(html)
   let select = page.getElementsByTagName('select')
   select = select.filter(s => s.attributes.name === 'season')
@@ -158,7 +158,7 @@ async function getSeasonsWithEvents() {
   const seasonsWithEvents = []
   const seasonsData = Promise.all(
     seasons.map(season =>
-      $fetch<string>(`http://fiawec.alkamelsystems.com/?season=${season}`).then(
+      $fetch<string>(`http://alms.alkamelsystems.com/?season=${season}`).then(
         data => {
           return {
             data,
@@ -189,7 +189,7 @@ async function getAllEventResults() {
       return Promise.all(
         events.map(event =>
           $fetch<string>(
-            `http://fiawec.alkamelsystems.com/?season=${season}&evvent=${event}`
+            `http://alms.alkamelsystems.com/?season=${season}&evvent=${event}`
           ).then(data => ({ event, data }))
         )
       ).then(data => ({ season, events: data }))
@@ -214,10 +214,7 @@ function parseEventResults(
   td = td.filter(t => t.getElementsByTagName('a').length > 0)
   const results = []
   for (const t of td) {
-    if (
-      (t.text.includes('FIA WEC') && !t.text.includes('ROOKIE TEST')) ||
-      t.text.includes('24 HEURES DU MANS')
-    ) {
+    if (t.text.includes('ASIAN LE MANS SERIES')) {
       const links = t.getElementsByTagName('a').map(a => a.attributes.href)
       for (const link of links) {
         if (
