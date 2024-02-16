@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NuxtPwaManifest />
     <NuxtLoadingIndicator :duration="1000" :color="false" class="bg-red-500" />
     <NuxtLayout
       class="bg-gray-100 font-sans text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400">
@@ -34,6 +35,10 @@ useHead({
     {
       name: 'background-color',
       content: colorMode.value === 'dark' ? '#18181b' : '#ffffff',
+    },
+    {
+      name: 'description',
+      content: 'Endurance Results',
     },
   ],
 })

@@ -1,3 +1,5 @@
+import process from 'node:process'
+const sw = process.env.SW === 'true'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -7,11 +9,13 @@ export default defineNuxtConfig({
     '@vue-macros/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/google-fonts',
+    '@vite-pwa/nuxt',
   ],
   devtools: { enabled: true },
   experimental: {
     componentIslands: true,
     typedPages: true,
+    payloadExtraction: true,
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -38,5 +42,53 @@ export default defineNuxtConfig({
   routeRules: {
     '/**': { isr: 60 },
     '/': { prerender: true },
+  },
+  pwa: {
+    strategies: sw ? 'injectManifest' : 'generateSW',
+    srcDir: sw ? 'service-worker' : undefined,
+    filename: sw ? 'sw.ts' : undefined,
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Endurance Results',
+      short_name: 'Endurance Results',
+      theme_color: '#18181b',
+      icons: [
+        {
+          src: 'pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+        {
+          src: 'pwa-512x512-maskable.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable',
+        },
+      ],
+    },
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
+    injectManifest: {
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
+    client: {
+      installPrompt: true,
+      // you don't need to include this: only for testing purposes
+      // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
+      periodicSyncForUpdates: 20,
+    },
+    devOptions: {
+      enabled: false,
+      suppressWarnings: true,
+      navigateFallback: '/',
+      navigateFallbackAllowlist: [/^\/$/],
+      type: 'module',
+    },
   },
 })
