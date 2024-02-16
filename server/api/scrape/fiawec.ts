@@ -260,13 +260,22 @@ function minifyCsv(csv: string) {
   })
   const lines = []
 
-  for (let i = 1; i < allTextLines.length; i++) {
+  for (let i = 0; i < allTextLines.length; i++) {
     // split content based on comma
     const data = allTextLines[i].split(';')
     if (data.length > 1) {
       const obj = {} as any
       for (let j = 0; j < headers.length; j++) {
-        const substrings = ['ECM', 'EXTRA', 'Extra', 'LICENSE', 'COUNTRY']
+        const substrings = [
+          'ECM',
+          'EXTRA',
+          'Extra',
+          'LICENSE',
+          'COUNTRY',
+          'HOMETOWN',
+          'Sort Key',
+          'SHORTNAME',
+        ]
         const regex = new RegExp(substrings.join('|'))
         if (
           regex.test(headers[j]) ||
@@ -274,6 +283,7 @@ function minifyCsv(csv: string) {
           data[j] === null ||
           data[j] === undefined
         ) {
+          obj[headers[j]] = null
           continue
         }
 
@@ -283,9 +293,11 @@ function minifyCsv(csv: string) {
           'DRIVER3 SECONDNAME',
           'DRIVER4 SECONDNAME',
           'DRIVER5 SECONDNAME',
+          'DRIVER6 SECONDNAME',
         ]
         const lastnameregex = new RegExp(lastnamesubstrings.join('|'))
         if (lastnameregex.test(headers[j])) {
+          obj[headers[j]] = null
           continue
         }
         const firstnamesubstrings = [
@@ -294,12 +306,18 @@ function minifyCsv(csv: string) {
           'DRIVER3 FIRSTNAME',
           'DRIVER4 FIRSTNAME',
           'DRIVER5 FIRSTNAME',
+          'DRIVER6 FIRSTNAME',
         ]
         const firstnameregex = new RegExp(firstnamesubstrings.join('|'))
         if (firstnameregex.test(headers[j])) {
-          obj[
-            headers[j].replace('FIRSTNAME', '').replace(/([A-Z])(\d)/g, '$1 $2')
-          ] = data[j] + ' ' + data[j + 1]
+          if (i === 0) {
+            obj[headers[j].replace('FIRSTNAME', '')] = data[j]
+              .replace('FIRSTNAME', '')
+              .replace(/([A-Z])(\d)/g, '$1 $2')
+          } else {
+            obj[headers[j].replace('FIRSTNAME', '')] =
+              data[j] + ' ' + data[j + 1]
+          }
         } else {
           obj[headers[j]] = data[j]
         }
@@ -310,8 +328,45 @@ function minifyCsv(csv: string) {
   if (lines === undefined || lines.length === 0 || lines === null) {
     return csv
   }
+
+  let keys = Object.keys(lines[0])
+  // if a column is empty, remove it and remove it from all lines
+  for (let i = 0; i < keys.length; i++) {
+    if (lines[0][keys[i]] === null) {
+      for (let j = 0; j < lines.length; j++) {
+        delete lines[j][keys[i]]
+      }
+    }
+  }
+
+  // check if key has a value in all objects if not delete it
+  keys = Object.keys(lines[0])
+  for (let i = 0; i < keys.length; i++) {
+    let hasValue = false
+    for (let j = 1; j < lines.length; j++) {
+      if (lines[j][keys[i]] !== null) {
+        hasValue = true
+        break
+      }
+    }
+    if (!hasValue) {
+      for (let j = 0; j < lines.length; j++) {
+        delete lines[j][keys[i]]
+      }
+    }
+  }
+
+  // check if all objects have the same keys
+  keys = Object.keys(lines[0])
+  for (let i = 0; i < lines.length; i++) {
+    if (keys.length !== Object.keys(lines[i]).length) {
+      return csv
+    }
+  }
+
   // turn object back into csv
-  const topLine = Object.keys(lines[0]).join(';')
+  const topLine = Object.values(lines[0]).join(';')
+  lines.splice(0, 1)
   const updatedLines = lines.reduce(
     (acc, val) => acc.concat(Object.values(val).join(`;`)),
     []
