@@ -101,6 +101,23 @@ function csv2Array(input: string) {
       lines.push(obj)
     }
   }
+  // if key is empty in every object remove the key from every object
+  const keys = Object.keys(lines[0])
+  for (let i = 0; i < keys.length; i++) {
+    let hasValue = false
+    for (let j = 1; j < lines.length; j++) {
+      if (lines[j][keys[i]] !== '') {
+        hasValue = true
+        break
+      }
+    }
+    if (!hasValue) {
+      for (let j = 0; j < lines.length; j++) {
+        delete lines[j][keys[i]]
+      }
+    }
+  }
+
   return lines
 }
 </script>
