@@ -121,3 +121,9 @@ function csv2Array(input: string) {
   return lines
 }
 </script>
+
+<style>
+table tr:nth-child(even) td {
+  @apply dark:bg-gray-900/50 bg-gray-100/50;
+}
+</style>
