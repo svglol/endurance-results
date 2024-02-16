@@ -15,10 +15,27 @@
         <DownloadButton :url="data?.url" />
       </div>
     </template>
-    <div v-if="data?.value">
-      <UTable :rows="csv2Array(data.value)" />
+    <div
+      class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-row gap-2">
+      <USelectMenu
+        v-model="selectedColumns"
+        :options="columns"
+        multiple
+        :popper="{ arrow: true }">
+        <UButton icon="i-heroicons-view-columns" color="primary" size="xs">
+          Columns
+        </UButton>
+      </USelectMenu>
+      <UButton
+        icon="i-heroicons-funnel"
+        color="primary"
+        size="xs"
+        :disabled="selectedColumns.length === columns.length"
+        @click="selectedColumns = columns">
+        Reset
+      </UButton>
     </div>
-    <div v-else>No data</div>
+    <UTable :rows="items" :columns="columnsTable" />
   </UCard>
 </template>
 
@@ -29,6 +46,29 @@ const { series, season, event, result } = useRoute(
 
 const { data } = await useFetch(
   `/api/series/${deSlugify(series)}/seasons/${deSlugify(season)}/events/${deSlugify(event)}/results/${deSlugify(result)}`
+)
+
+const items = computed(() => {
+  if (data.value?.value) return csv2Array(data.value?.value)
+  else return []
+})
+
+const columns = computed(() => {
+  if (items.value[0]) {
+    const keys = Object.keys(items.value[0])
+    return keys.map(key => {
+      return {
+        key,
+        label: key,
+      }
+    })
+  }
+  return []
+})
+
+const selectedColumns = ref(columns.value)
+const columnsTable = computed(() =>
+  columns.value.filter(column => selectedColumns.value.includes(column))
 )
 
 function deSlugify(str: string) {

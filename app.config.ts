@@ -5,5 +5,8 @@ export default defineAppConfig({
     icons: {
       dynamic: true,
     },
+    selectMenu: {
+      width: 'w-auto min-w-full',
+    },
   },
 })
