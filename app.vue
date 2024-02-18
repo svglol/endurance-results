@@ -42,6 +42,21 @@ useHead({
     },
   ],
 })
+
+useSeoMeta({
+  title: 'Endurance Results',
+  ogTitle: 'Endurance Results',
+  description: 'Endurance Results',
+  ogDescription: 'Endurance Results',
+  ogType: 'website',
+  ogUrl: useSiteConfig().siteUrl + useRoute().path,
+  ogSiteName: 'Endurance Results',
+  twitterTitle: 'Endurance Results',
+  twitterDescription: 'Endurance Results',
+  twitterCard: 'summary_large_image',
+})
+
+defineOgImage({ component: 'OgImage' })
 </script>
 
 <style>
