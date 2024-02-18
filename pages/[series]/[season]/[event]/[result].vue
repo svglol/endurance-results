@@ -39,7 +39,16 @@
       </UButton>
     </div>
     <div class="max-w-full">
-      <UTable :rows="items" :columns="columnsTable" />
+      <UTable
+        :rows="items"
+        :columns="columnsTable"
+        sort-asc-icon="i-heroicons-arrow-up-20-solid"
+        sort-desc-icon="i-heroicons-arrow-down-20-solid"
+        :sort-button="{
+          color: 'primary',
+          variant: 'ghost',
+          size: '2xs',
+        }" />
     </div>
   </UCard>
 </template>
@@ -65,6 +74,7 @@ const columns = computed(() => {
       return {
         key,
         label: key,
+        sortable: true,
       }
     })
   }
