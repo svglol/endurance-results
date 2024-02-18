@@ -1,9 +1,9 @@
 <template>
-  <div
-    v-if="title === 'Endurance Results'"
-    class="h-full w-full bg-red-500 p-4">
-    <div class="bg-zinc-900 h-full w-full rounded-3xl">
-      <div class="flex flex-row items-center gap-4 relative mx-auto my-auto">
+  <div class="h-full w-full red-gradient p-4">
+    <div class="black-gradient h-full w-full rounded-3xl">
+      <div
+        v-if="title === 'Endurance Results'"
+        class="flex flex-row items-center gap-4 relative mx-auto my-auto">
         <span class="text-6xl text-center flex flex-row gap-1 justify-center">
           <UIcon name="noto:racing-car" />
           <UIcon name="noto:dashing-away" />
@@ -12,12 +12,9 @@
           Endurance Results
         </h1>
       </div>
-    </div>
-  </div>
-  <div v-else class="h-full w-full bg-red-500 p-4">
-    <div class="bg-zinc-900 h-full w-full rounded-3xl">
       <div
-        class="flex flex-col p-12 py-24 items-center relative my-auto justify-center gap-4">
+        v-else
+        class="flex flex-col p-12 py-24 items-center relative my-auto">
         <div>
           <h1 class="mb-4 text-5xl text-white">
             {{ title }}
@@ -52,3 +49,15 @@ $defineProps<{
   description?: String
 }>()
 </script>
+
+<style scoped>
+.red-gradient {
+  background: #f87171;
+  background: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
+}
+
+.black-gradient {
+  background: #09090b;
+  background: linear-gradient(135deg, #09090b 0%, #27272a 100%);
+}
+</style>
