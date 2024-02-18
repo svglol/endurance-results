@@ -5,12 +5,16 @@
       background: 'bg-white/50 dark:bg-black/20',
     }">
     <template #header>
-      <div class="flex flex-wrap gap-2 rounded-t-lg justify-between">
+      <div
+        class="flex flex-wrap gap-2 rounded-t-lg justify-between items-center">
         <span
           class="text-base md:text-2xl font-bold dark:text-gray-200 text-gray-800">
-          {{
-            `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data?.name}`
-          }}
+          <UBreadcrumb :links="breadcrumbLinks">
+            <template #divider>
+              <UIcon name="heroicons-outline:chevron-right" />
+            </template>
+          </UBreadcrumb>
+          {{ `${data?.name}` }}
         </span>
         <div class="flex flex-row gap-2">
           <ShareButton />
@@ -61,6 +65,18 @@ const { series, season, event, result } = useRoute(
 const { data } = await useFetch(
   `/api/series/${deSlugify(series)}/seasons/${deSlugify(season)}/events/${deSlugify(event)}/results/${deSlugify(result)}`
 )
+
+const breadcrumbLinks = [
+  {
+    label: `${deSlugify(series)}`,
+  },
+  {
+    label: `${deSlugify(season)}`,
+  },
+  {
+    label: `${deSlugify(event)}`,
+  },
+]
 
 const items = computed(() => {
   if (data.value?.value) return csv2Array(data.value?.value)
