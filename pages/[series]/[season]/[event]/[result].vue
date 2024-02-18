@@ -5,14 +5,17 @@
       background: 'bg-white/50 dark:bg-black/20',
     }">
     <template #header>
-      <div class="flex flex-row gap-2 rounded-t-lg">
-        <span class="text-2xl font-bold dark:text-gray-200 text-gray-800">
+      <div class="flex flex-wrap gap-2 rounded-t-lg justify-between">
+        <span
+          class="text-base md:text-2xl font-bold dark:text-gray-200 text-gray-800">
           {{
             `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data?.name}`
           }}
         </span>
-        <ShareButton />
-        <DownloadButton :url="data?.url" />
+        <div class="flex flex-row gap-2">
+          <ShareButton />
+          <DownloadButton :url="data?.url" />
+        </div>
       </div>
     </template>
     <div
@@ -35,7 +38,9 @@
         Reset
       </UButton>
     </div>
-    <UTable :rows="items" :columns="columnsTable" />
+    <div class="max-w-full">
+      <UTable :rows="items" :columns="columnsTable" />
+    </div>
   </UCard>
 </template>
 
