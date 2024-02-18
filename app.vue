@@ -38,7 +38,7 @@ useHead({
     },
     {
       name: 'description',
-      content: 'Endurance Results',
+      content: 'Get all endurance racing results in one place!',
     },
   ],
 })
@@ -46,13 +46,13 @@ useHead({
 useSeoMeta({
   title: 'Endurance Results',
   ogTitle: 'Endurance Results',
-  description: 'Endurance Results',
-  ogDescription: 'Endurance Results',
+  description: 'Get all endurance racing results in one place!',
+  ogDescription: 'Get all endurance racing results in one place! ',
   ogType: 'website',
   ogUrl: useSiteConfig().siteUrl + useRoute().path,
   ogSiteName: 'Endurance Results',
   twitterTitle: 'Endurance Results',
-  twitterDescription: 'Endurance Results',
+  twitterDescription: 'Get all endurance racing results in one place!',
   twitterCard: 'summary_large_image',
 })
 

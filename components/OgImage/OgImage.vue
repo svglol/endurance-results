@@ -23,7 +23,9 @@
             {{ title }}
           </h1>
           <div
-            v-if="description !== 'Endurance Results'"
+            v-if="
+              description !== 'Get all endurance racing results in one place!'
+            "
             class="max-w-full text-3xl leading-tight text-white/90 mx-auto">
             {{ description }}
           </div>

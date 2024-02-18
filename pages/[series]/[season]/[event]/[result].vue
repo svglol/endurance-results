@@ -139,13 +139,13 @@ function csv2Array(input: string) {
 useSeoMeta({
   title: `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}`,
   ogTitle: `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}`,
-  description: 'Endurance Results',
-  ogDescription: 'Endurance Results',
+  description: 'Get all endurance racing results in one place!',
+  ogDescription: 'Get all endurance racing results in one place!',
   ogType: 'website',
   ogUrl: useSiteConfig().siteUrl + useRoute().path,
   ogSiteName: 'Endurance Results',
   twitterTitle: `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}`,
-  twitterDescription: 'Endurance Results',
+  twitterDescription: 'Get all endurance racing results in one place!',
   twitterCard: 'summary_large_image',
 })
 </script>
