@@ -1,5 +1,6 @@
 <template>
-  <div class="min-h-max flex flex-col gap-6 justify-center items-center">
+  <div
+    class="min-h-[calc(100vh-7rem)] lg:min-h-[calc(100vh-3rem)] flex flex-col justify-center items-center">
     <div>
       <span
         class="text-6xl lg:text-9xl text-center flex flex-row gap-1 justify-center">
