@@ -102,10 +102,6 @@ const columnsTable = computed(() =>
   columns.value.filter(column => selectedColumns.value.includes(column))
 )
 
-function deSlugify(str: string) {
-  return str.replace(/_/g, ' ').toUpperCase()
-}
-
 useHead({
   title:
     `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}` ??

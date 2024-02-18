@@ -79,7 +79,6 @@
 </template>
 
 <script lang="ts" setup>
-import slugify from 'slugify'
 const { data } = $defineProps<{
   data: SeriesWithRelations[] | null
 }>()
@@ -248,11 +247,6 @@ watch(selectedEvent, () => {
 })
 
 function createSlug(label: string) {
-  return `/${slugify(selectedSeries.value.label, { replacement: '_', lower: true })}/${slugify(selectedSeason.value.label, { replacement: '_', lower: true })}/${slugify(selectedEvent.value.label, { replacement: '_', lower: true })}/${slugify(label, { replacement: '_', lower: true })}`
-}
-
-function deSlugify(str: string) {
-  if (!str) return str
-  return str.replace(/_/g, ' ').toUpperCase()
+  return `/${slugify(selectedSeries.value.label)}/${slugify(selectedSeason.value.label)}/${slugify(selectedEvent.value.label)}/${slugify(label)}`
 }
 </script>
