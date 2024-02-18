@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/google-fonts',
     '@vite-pwa/nuxt',
+    '@nuxtjs/seo',
   ],
   devtools: { enabled: true },
   experimental: {
@@ -86,5 +87,11 @@ export default defineNuxtConfig({
       navigateFallbackAllowlist: [/^\/$/],
       type: 'module',
     },
+  },
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL,
+    name: 'Endurance Results',
+    description: 'Endurance Results',
+    defaultLocale: 'en',
   },
 })

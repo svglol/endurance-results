@@ -135,6 +135,19 @@ function csv2Array(input: string) {
 
   return lines
 }
+
+useSeoMeta({
+  title: `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}`,
+  ogTitle: `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}`,
+  description: 'Endurance Results',
+  ogDescription: 'Endurance Results',
+  ogType: 'website',
+  ogUrl: useSiteConfig().siteUrl + useRoute().path,
+  ogSiteName: 'Endurance Results',
+  twitterTitle: `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}`,
+  twitterDescription: 'Endurance Results',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <style>
