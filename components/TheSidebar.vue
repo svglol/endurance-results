@@ -80,19 +80,22 @@
 
 <script lang="ts" setup>
 import slugify from 'slugify'
-const { data } = await useFetch('/api/series')
+const { data } = $defineProps<{
+  data: SeriesWithRelations[] | null
+}>()
 const toggleMobileMenu = useState('mobilemenu', () => false)
 
 const series = computed(() => {
   return (
-    data.value?.map(({ name, id }) => {
+    data?.map(({ name, id }) => {
       return { label: name, value: id }
     }) ?? []
   )
 })
+
 const seasons = computed(() => {
   return (
-    data.value
+    data
       ?.filter(({ id }) => id === selectedSeries.value.value)
       .flatMap(({ seasons }) =>
         seasons.map(({ name, id }) => {
@@ -104,7 +107,7 @@ const seasons = computed(() => {
 
 const events = computed(() => {
   return (
-    data.value
+    data
       ?.filter(({ id }) => id === selectedSeries.value.value)
       .flatMap(({ seasons }) =>
         seasons.filter(({ id }) => id === selectedSeason.value.value)
@@ -118,7 +121,7 @@ const events = computed(() => {
 
 const results = computed(() => {
   return (
-    data.value
+    data
       ?.filter(({ id }) => id === selectedSeries.value.value)
       .flatMap(({ seasons }) =>
         seasons.filter(({ id }) => id === selectedSeason.value.value)

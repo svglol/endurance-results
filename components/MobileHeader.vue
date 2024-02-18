@@ -19,9 +19,6 @@
         variant="ghost"
         @click="toggleMobileMenu = !toggleMobileMenu" />
     </div>
-    <MobileMenu>
-      <TheSidebar class="w-full sticky px-4 py-4" />
-    </MobileMenu>
   </div>
 </template>
 
