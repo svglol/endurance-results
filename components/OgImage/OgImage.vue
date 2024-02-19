@@ -2,7 +2,7 @@
   <div class="h-full w-full red-gradient p-4">
     <div class="black-gradient h-full w-full rounded-3xl">
       <div
-        v-if="title === 'Endurance Results'"
+        v-if="title === ''"
         class="flex flex-row items-center gap-4 relative mx-auto my-auto">
         <span class="text-6xl text-center flex flex-row gap-1 justify-center">
           <UIcon name="twemoji:racing-car" />
