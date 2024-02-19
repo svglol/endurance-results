@@ -1,7 +1,10 @@
 <template>
   <div>
     <NuxtPwaManifest />
-    <NuxtLoadingIndicator :duration="1000" :color="false" class="bg-red-500" />
+    <NuxtLoadingIndicator
+      :duration="1000"
+      :color="false"
+      class="bg-orange-500" />
     <NuxtLayout
       class="bg-gray-100 font-sans text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400">
       <NuxtPage />
