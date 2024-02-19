@@ -91,7 +91,7 @@ export default defineNuxtConfig({
   site: {
     url: process.env.NUXT_PUBLIC_SITE_URL,
     name: 'Endurance Results',
-    description: 'Endurance Results',
+    description: 'Get all endurance racing results in one place!',
     defaultLocale: 'en',
   },
 })

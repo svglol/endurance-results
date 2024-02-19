@@ -18,7 +18,7 @@ useHead({
   titleTemplate: titleChunk => {
     return titleChunk
       ? `${titleChunk} - Endurance Results`
-      : ' Endurance Results'
+      : 'Endurance Results'
   },
   htmlAttrs: {
     lang: 'en',
@@ -47,7 +47,6 @@ useHead({
 })
 
 useSeoMeta({
-  title: 'Endurance Results',
   ogTitle: 'Endurance Results',
   description: 'Get all endurance racing results in one place!',
   ogDescription: 'Get all endurance racing results in one place! ',
