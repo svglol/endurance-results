@@ -60,6 +60,8 @@
     </div>
     <div class="max-w-full">
       <UTable
+        v-model:sort="sort"
+        sort-mode="manual"
         :rows="filteredItems"
         :columns="columnsTable"
         sort-asc-icon="i-heroicons-arrow-up-20-solid"
@@ -117,6 +119,14 @@ const columns = computed(() => {
   return []
 })
 
+const sort = ref({
+  column: columns.value[0].key,
+  direction: 'asc',
+}) as Ref<{
+  column: string
+  direction: 'asc' | 'desc'
+}>
+
 const selectedColumns = ref(columns.value)
 const columnsTable = computed(() =>
   columns.value.filter(column => selectedColumns.value.includes(column))
@@ -146,9 +156,28 @@ const classes = computed(() => {
 
 const selectedClasses = ref(classes.value)
 const filteredItems = computed(() => {
-  return items.value.filter(item =>
-    selectedClasses.value.includes(item.Class || item.class || item.CLASS)
-  )
+  return items.value
+    .filter(item =>
+      selectedClasses.value.includes(item.Class || item.class || item.CLASS)
+    )
+    .sort((a, b) => {
+      if (isNaN(a[sort.value.column]) && isNaN(b[sort.value.column])) {
+        if (a[sort.value.column] < b[sort.value.column]) {
+          return sort.value.direction === 'asc' ? -1 : 1
+        }
+        if (a[sort.value.column] > b[sort.value.column]) {
+          return sort.value.direction === 'asc' ? 1 : -1
+        }
+      } else {
+        if (Number(a[sort.value.column]) < Number(b[sort.value.column])) {
+          return sort.value.direction === 'asc' ? -1 : 1
+        }
+        if (Number(a[sort.value.column]) > Number(b[sort.value.column])) {
+          return sort.value.direction === 'asc' ? 1 : -1
+        }
+      }
+      return 0
+    })
 })
 
 useHead({
