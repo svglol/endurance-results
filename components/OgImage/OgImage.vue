@@ -5,8 +5,8 @@
         v-if="title === 'Endurance Results'"
         class="flex flex-row items-center gap-4 relative mx-auto my-auto">
         <span class="text-6xl text-center flex flex-row gap-1 justify-center">
-          <UIcon name="noto:racing-car" />
-          <UIcon name="noto:dashing-away" />
+          <UIcon name="twemoji:racing-car" />
+          <UIcon name="twemoji:dashing-away" />
         </span>
         <h1 class="text-6xl font-light text-white z-10 relative">
           Endurance Results
@@ -34,8 +34,8 @@
         </div>
         <div class="flex flex-row items-center gap-4">
           <span class="text-4xl text-center flex flex-row gap-1 justify-center">
-            <UIcon name="noto:racing-car" />
-            <UIcon name="noto:dashing-away" />
+            <UIcon name="twemoji:racing-car" />
+            <UIcon name="twemoji:dashing-away" />
           </span>
           <h1 class="text-4xl font-light text-white">Endurance Results</h1>
         </div>
@@ -57,8 +57,8 @@ $defineProps<{
 
 <style scoped>
 .red-gradient {
-  background: #f87171;
-  background: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
+  background: #fb923c;
+  background: linear-gradient(135deg, #fb923c 0%, #c2410c 100%);
 }
 
 .black-gradient {

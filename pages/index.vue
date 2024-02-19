@@ -4,8 +4,8 @@
     <div>
       <span
         class="text-6xl lg:text-9xl text-center flex flex-row gap-1 justify-center">
-        <UIcon name="noto:racing-car" />
-        <UIcon name="noto:dashing-away" />
+        <UIcon name="twemoji:racing-car" />
+        <UIcon name="twemoji:dashing-away" />
       </span>
       <span
         class="text-2xl lg:text-8xl font-light text-center dark:text-white text-black">
