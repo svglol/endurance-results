@@ -109,6 +109,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     storage: {
+      cache: { driver: 'vercelKV' },
       data: { driver: 'vercelKV' },
     },
   },
