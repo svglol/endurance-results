@@ -242,13 +242,20 @@ function parseEventResults(
   }
 }
 
-function convertResultName(result: string) {
-  result = result.replace('.CSV', '')
-  result = result.split('/')[result.split('/').length - 1]
-  const arr = result.split('_')
-  result = arr[arr.length - 2] + ' ' + arr[arr.length - 1]
-  result = result.replace('Classification ', '')
-  return decodeURI(result)
+function convertResultName(input: string) {
+  const fileName = input.replace('.CSV', '').split('/').pop() || ''
+  const parts = fileName.split('_')
+  const resultName = parts.slice(-2).join(' ').replace('Classification ', '')
+  if (input.includes('/Hour')) {
+    const parts = input.split('/')
+    const hour = decodeURI(parts[5])
+    const classification = decodeURIComponent(parts[6])
+      .replace('.CSV', '')
+      .split('_')[2]
+    const title = `${classification} ${hour}`
+    return title
+  }
+  return decodeURI(resultName)
 }
 
 function minifyCsv(csv: string) {

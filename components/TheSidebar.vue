@@ -144,19 +144,49 @@ const practiceResults = computed(() => {
 const qualifyingResults = computed(() => {
   const substrings = ['Qualifying', 'Hyperpole']
   const regex = new RegExp(substrings.join('|'))
-  return results.value.filter(({ label }) => regex.test(label))
+  // Exclude labels already matched by practiceResults
+  return results.value.filter(
+    ({ label }) =>
+      regex.test(label) &&
+      !practiceResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label
+      )
+  )
 })
 
 const warmupResults = computed(() => {
   const substrings = ['Warmup', 'Warm-Up']
   const regex = new RegExp(substrings.join('|'))
-  return results.value.filter(({ label }) => regex.test(label))
+  // Exclude labels already matched by practiceResults and qualifyingResults
+  return results.value.filter(
+    ({ label }) =>
+      regex.test(label) &&
+      !practiceResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label
+      ) &&
+      !qualifyingResults.value.find(
+        ({ label: qualifyingLabel }) => qualifyingLabel === label
+      )
+  )
 })
 
 const raceResults = computed(() => {
   const substrings = ['Race']
   const regex = new RegExp(substrings.join('|'))
-  return results.value.filter(({ label }) => regex.test(label))
+  // Exclude labels already matched by practiceResults, qualifyingResults, and warmupResults
+  return results.value.filter(
+    ({ label }) =>
+      regex.test(label) &&
+      !practiceResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label
+      ) &&
+      !qualifyingResults.value.find(
+        ({ label: qualifyingLabel }) => qualifyingLabel === label
+      ) &&
+      !warmupResults.value.find(
+        ({ label: warmupLabel }) => warmupLabel === label
+      )
+  )
 })
 
 const otherResults = computed(() => {
