@@ -66,6 +66,10 @@ const { data } = await useFetch(
   `/api/series/${deSlugify(series)}/seasons/${deSlugify(season)}/events/${deSlugify(event)}/results/${deSlugify(result)}`
 )
 
+if (!data.value) {
+  navigateTo('/', { replace: true })
+}
+
 const breadcrumbLinks = [
   {
     label: `${deSlugify(series)}`,
