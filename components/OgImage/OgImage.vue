@@ -14,16 +14,21 @@
       </div>
       <div
         v-else
-        class="flex flex-col p-12 py-24 items-center relative my-auto">
+        class="flex flex-col p-12 items-center justify-between relative my-auto h-full">
+        <div></div>
         <div>
-          <h1 class="mb-4 text-5xl text-white">
-            {{ title }}
-          </h1>
+          <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
+            <template v-for="text in title?.split(' - ')" :key="text">
+              <span class="text-5xl text-white text-center">
+                {{ text }}
+              </span>
+            </template>
+          </div>
           <div
             v-if="
               description !== 'Get all endurance racing results in one place!'
             "
-            class="max-w-full text-3xl leading-tight text-white/90 mx-auto">
+            class="max-w-full text-3xl leading-tight text-white/90 mx-auto text-center">
             {{ description }}
           </div>
         </div>
