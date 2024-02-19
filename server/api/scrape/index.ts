@@ -1,5 +1,6 @@
 export default defineEventHandler(async () => {
   const storage = useStorage('data')
+
   const [fiawec, elms, alms] = await Promise.all([
     $fetch('/api/scrape/fiawec'),
     $fetch('/api/scrape/elms'),
@@ -11,7 +12,13 @@ export default defineEventHandler(async () => {
     elms.updatedELMS > 0 ||
     alms.updatedALMS > 0
   ) {
-    storage.clear()
+    const keys = await storage.getKeys()
+
+    for (const key of keys) {
+      if (key.startsWith('nitro:')) {
+        await storage.removeItem(key)
+      }
+    }
   }
 
   return [fiawec, elms, alms]
