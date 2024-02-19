@@ -26,7 +26,7 @@
       </div>
     </template>
     <div
-      class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-row gap-2">
+      class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-2">
       <USelectMenu
         v-model="selectedColumns"
         :options="columns"
