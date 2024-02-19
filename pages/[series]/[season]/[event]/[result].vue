@@ -36,18 +36,31 @@
           Columns
         </UButton>
       </USelectMenu>
+      <USelectMenu
+        v-if="classes.length > 0"
+        v-model="selectedClasses"
+        :options="classes"
+        multiple
+        :popper="{ arrow: true }">
+        <UButton color="primary" size="xs" icon="heroicons-solid:funnel">
+          Filter Classes
+        </UButton>
+      </USelectMenu>
       <UButton
         icon="i-heroicons-funnel"
         color="primary"
         size="xs"
-        :disabled="selectedColumns.length === columns.length"
-        @click="selectedColumns = columns">
+        :disabled="
+          selectedColumns.length === columns.length &&
+          selectedClasses.length === classes.length
+        "
+        @click="reset()">
         Reset
       </UButton>
     </div>
     <div class="max-w-full">
       <UTable
-        :rows="items"
+        :rows="filteredItems"
         :columns="columnsTable"
         sort-asc-icon="i-heroicons-arrow-up-20-solid"
         sort-desc-icon="i-heroicons-arrow-down-20-solid"
@@ -109,6 +122,35 @@ const columnsTable = computed(() =>
   columns.value.filter(column => selectedColumns.value.includes(column))
 )
 
+const classes = computed(() => {
+  if (
+    Object.keys(items.value[0]).some(
+      key => key === 'Class' || key === 'class' || key === 'CLASS'
+    )
+  ) {
+    const uniqueValues = new Set() as Set<string>
+    items.value.forEach(obj => {
+      const key =
+        Object.keys(obj).find(
+          key => key === 'Class' || key === 'class' || key === 'CLASS'
+        ) ?? 'Class'
+
+      const value = obj[key] as string
+      uniqueValues.add(value)
+    })
+    return Array.from(uniqueValues)
+  } else {
+    return []
+  }
+})
+
+const selectedClasses = ref(classes.value)
+const filteredItems = computed(() => {
+  return items.value.filter(item =>
+    selectedClasses.value.includes(item.Class || item.class || item.CLASS)
+  )
+})
+
 useHead({
   title:
     `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}` ??
@@ -167,6 +209,11 @@ useSeoMeta({
   twitterDescription: 'Get all endurance racing results in one place!',
   twitterCard: 'summary_large_image',
 })
+
+function reset() {
+  selectedColumns.value = columns.value
+  selectedClasses.value = classes.value
+}
 </script>
 
 <style>
