@@ -265,15 +265,17 @@ const selectedEvent = ref(
 )
 
 watch(selectedSeries, () => {
-  selectedSeason.value = seasons.value[0]
+  selectedSeason.value = seasons.value[seasons.value.length - 1]
 })
 
 watch(selectedSeason, () => {
-  selectedEvent.value = events.value[0]
+  selectedEvent.value = events.value[events.value.length - 1]
 })
 
 watch(selectedEvent, () => {
-  navigateTo(createSlug(results.value[0].label), { replace: true })
+  navigateTo(createSlug(results.value[0].label), {
+    replace: true,
+  })
 })
 
 function createSlug(label: string) {
