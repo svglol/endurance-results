@@ -96,7 +96,12 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { isr: 60 },
-    '/api/*': { isr: 1800 },
+    '/api/*': {
+      isr: 60 * 60,
+      cache: {
+        base: 'vercelKV',
+      },
+    },
   },
   ogImage: {
     runtimeCacheStorage: {
