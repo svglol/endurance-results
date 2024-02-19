@@ -9,7 +9,10 @@
         class="flex flex-wrap gap-2 rounded-t-lg justify-between items-center">
         <span
           class="text-base md:text-2xl font-bold dark:text-gray-200 text-gray-800">
-          <UBreadcrumb :links="breadcrumbLinks">
+          <UBreadcrumb
+            :links="breadcrumbLinks"
+            :ui="{ ol: 'flex-wrap ' }"
+            class="max-w-[calc(100vw-4rem)] overflow-hidden">
             <template #divider>
               <UIcon name="heroicons-outline:chevron-right" />
             </template>
