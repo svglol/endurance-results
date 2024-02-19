@@ -44,6 +44,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: 7.0.1
     version: 7.0.1(eslint@8.56.0)(typescript@5.3.3)
+  '@vercel/kv':
+    specifier: ^1.0.1
+    version: 1.0.1
   '@vite-pwa/nuxt':
     specifier: 0.5.0
     version: 0.5.0(rollup@2.79.1)(vite@5.1.3)(workbox-build@7.0.0)(workbox-window@7.0.0)
@@ -91,7 +94,7 @@ devDependencies:
     version: 6.1.12
   nuxt:
     specifier: 3.10.2
-    version: 3.10.2(@types/node@20.11.19)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
+    version: 3.10.2(@types/node@20.11.19)(@vercel/kv@1.0.1)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
   postcss-html:
     specifier: 1.6.0
     version: 1.6.0
@@ -2983,7 +2986,7 @@ packages:
       '@nuxt/kit': 3.10.2(rollup@2.79.1)
       '@nuxt/schema': 3.10.2(rollup@2.79.1)
       execa: 7.2.0
-      nuxt: 3.10.2(@types/node@20.11.19)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
+      nuxt: 3.10.2(@types/node@20.11.19)(@vercel/kv@1.0.1)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
       vite: 5.1.3(@types/node@20.11.19)
     transitivePeerDependencies:
       - rollup
@@ -3082,7 +3085,7 @@ packages:
       launch-editor: 2.6.1
       local-pkg: 0.5.0
       magicast: 0.3.3
-      nuxt: 3.10.2(@types/node@20.11.19)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
+      nuxt: 3.10.2(@types/node@20.11.19)(@vercel/kv@1.0.1)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
       nypm: 0.3.6
       ohash: 1.1.3
       pacote: 17.0.6
@@ -5023,6 +5026,19 @@ packages:
       - rollup
     dev: true
 
+  /@upstash/redis@1.25.1:
+    resolution: {integrity: sha512-ACj0GhJ4qrQyBshwFgPod6XufVEfKX2wcaihsEvSdLYnY+m+pa13kGt1RXm/yTHKf4TQi/Dy2A8z/y6WUEOmlg==}
+    dependencies:
+      crypto-js: 4.2.0
+    dev: true
+
+  /@vercel/kv@1.0.1:
+    resolution: {integrity: sha512-uTKddsqVYS2GRAM/QMNNXCTuw9N742mLoGRXoNDcyECaxEXvIHG0dEY+ZnYISV4Vz534VwJO+64fd9XeSggSKw==}
+    engines: {node: '>=14.6'}
+    dependencies:
+      '@upstash/redis': 1.25.1
+    dev: true
+
   /@vercel/nft@0.24.4:
     resolution: {integrity: sha512-KjYAZty7boH5fi5udp6p+lNu6nawgs++pHW+3koErMgbRkkHuToGX/FwjN5clV1FcaM3udfd4zW/sUapkMgpZw==}
     engines: {node: '>=16'}
@@ -5404,7 +5420,7 @@ packages:
       '@nuxt/kit': 3.10.2(rollup@2.79.1)
       '@vue-macros/common': 1.10.1(rollup@2.79.1)(vue@3.4.19)
       '@vue-macros/volar': 0.18.11(@vue-macros/reactivity-transform@0.4.3)(rollup@2.79.1)(typescript@5.3.3)(vue@3.4.19)
-      nuxt: 3.10.2(@types/node@20.11.19)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
+      nuxt: 3.10.2(@types/node@20.11.19)(@vercel/kv@1.0.1)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
       unplugin-vue-macros: 2.7.10(@vueuse/core@10.7.2)(esbuild@0.19.12)(rollup@2.79.1)(typescript@5.3.3)(vite@5.1.3)(vue@3.4.19)(webpack@5.90.2)
     transitivePeerDependencies:
       - '@vue-macros/reactivity-transform'
@@ -5814,7 +5830,7 @@ packages:
       '@vueuse/core': 10.7.2(vue@3.4.19)
       '@vueuse/metadata': 10.7.2
       local-pkg: 0.5.0
-      nuxt: 3.10.2(@types/node@20.11.19)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
+      nuxt: 3.10.2(@types/node@20.11.19)(@vercel/kv@1.0.1)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3)
       vue-demi: 0.14.7(vue@3.4.19)
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -7101,6 +7117,10 @@ packages:
 
   /crossws@0.1.1:
     resolution: {integrity: sha512-c9c/o7bS3OjsdpSkvexpka0JNlesBF2JU9B2V1yNsYGwRbAafxhJQ7VI9b48D5bpONz/oxbPGMzBojy9sXoQIQ==}
+    dev: true
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
     dev: true
 
   /crypto-random-string@2.0.0:
@@ -10818,7 +10838,7 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /nitropack@2.8.1:
+  /nitropack@2.8.1(@vercel/kv@1.0.1):
     resolution: {integrity: sha512-pODv2kEEzZSDQR+1UMXbGyNgMedUDq/qUomtiAnQKQvLy52VGlecXO1xDfH3i0kP1yKEcKTnWsx1TAF5gHM7xQ==}
     engines: {node: ^16.11.0 || >=17.0.0}
     hasBin: true
@@ -10891,7 +10911,7 @@ packages:
       unctx: 2.3.1
       unenv: 1.9.0
       unimport: 3.7.1(rollup@4.12.0)
-      unstorage: 1.10.1
+      unstorage: 1.10.1(@vercel/kv@1.0.1)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -11492,7 +11512,7 @@ packages:
       - webpack
     dev: true
 
-  /nuxt@3.10.2(@types/node@20.11.19)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3):
+  /nuxt@3.10.2(@types/node@20.11.19)(@vercel/kv@1.0.1)(eslint@8.56.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.1.3):
     resolution: {integrity: sha512-EYRPNPEHRoOzL5ZusOMoBvv1/yifGwdv7BLJPD/jaEDeEZvdXjLXLSRh2NukmdB1SdNmfL3wEnt5xtRpQO1niQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
     hasBin: true
@@ -11536,7 +11556,7 @@ packages:
       knitwork: 1.0.0
       magic-string: 0.30.7
       mlly: 1.5.0
-      nitropack: 2.8.1
+      nitropack: 2.8.1(@vercel/kv@1.0.1)
       nuxi: 3.10.1
       nypm: 0.3.6
       ofetch: 1.3.3
@@ -14569,7 +14589,7 @@ packages:
       webpack-virtual-modules: 0.6.1
     dev: true
 
-  /unstorage@1.10.1:
+  /unstorage@1.10.1(@vercel/kv@1.0.1):
     resolution: {integrity: sha512-rWQvLRfZNBpF+x8D3/gda5nUCQL2PgXy2jNG4U7/Rc9BGEv9+CAJd0YyGCROUBKs9v49Hg8huw3aih5Bf5TAVw==}
     peerDependencies:
       '@azure/app-configuration': ^1.4.1
@@ -14610,6 +14630,7 @@ packages:
       idb-keyval:
         optional: true
     dependencies:
+      '@vercel/kv': 1.0.1
       anymatch: 3.1.3
       chokidar: 3.6.0
       destr: 2.0.2
@@ -15414,7 +15435,6 @@ packages:
 
   /workbox-google-analytics@7.0.0:
     resolution: {integrity: sha512-MEYM1JTn/qiC3DbpvP2BVhyIH+dV/5BjHk756u9VbwuAhu0QHyKscTnisQuz21lfRpOwiS9z4XdqeVAKol0bzg==}
-    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
     dependencies:
       workbox-background-sync: 7.0.0
       workbox-core: 7.0.0

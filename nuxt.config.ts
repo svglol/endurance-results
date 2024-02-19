@@ -99,8 +99,17 @@ export default defineNuxtConfig({
     '/api/*': { isr: 1800 },
   },
   ogImage: {
+    runtimeCacheStorage: {
+      driver: 'vercelKV',
+      binding: 'OG_IMAGE_CACHE',
+    },
     defaults: {
       cacheMaxAgeSeconds: 60 * 60 * 24 * 7 * 1000, // 7 days
+    },
+  },
+  nitro: {
+    storage: {
+      data: { driver: 'vercelKV' },
     },
   },
 })
