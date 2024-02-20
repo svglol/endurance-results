@@ -27,6 +27,7 @@
     </template>
     <div
       class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-2">
+      <UInput v-model="search" placeholder="Search..." size="xs" />
       <USelectMenu
         v-model="selectedColumns"
         :options="columns"
@@ -153,7 +154,7 @@ const classes = computed(() => {
     return []
   }
 })
-
+const search = ref('')
 const selectedClasses = ref(classes.value)
 const filteredItems = computed(() => {
   return items.value
@@ -177,6 +178,21 @@ const filteredItems = computed(() => {
         }
       }
       return 0
+    })
+    .filter(item => {
+      if (!search.value) return true
+      for (const key in item) {
+        if (
+          item[key]
+            .toString()
+            .toLowerCase()
+            .includes(search.value.toLowerCase()) &&
+          isNaN(item[key])
+        ) {
+          return true
+        }
+      }
+      return false
     })
 })
 
