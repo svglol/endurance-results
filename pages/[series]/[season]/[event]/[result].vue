@@ -53,7 +53,8 @@
         size="xs"
         :disabled="
           selectedColumns.length === columns.length &&
-          selectedClasses.length === classes.length
+          selectedClasses.length === classes.length &&
+          search === ''
         "
         @click="reset()">
         Reset
@@ -258,6 +259,7 @@ useSeoMeta({
 function reset() {
   selectedColumns.value = columns.value
   selectedClasses.value = classes.value
+  search.value = ''
 }
 </script>
 
