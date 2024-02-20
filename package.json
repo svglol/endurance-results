@@ -44,7 +44,7 @@
     "@vue-macros/nuxt": "1.9.21",
     "@vue/test-utils": "2.4.4",
     "@vueuse/core": "10.8.0",
-    "@vueuse/nuxt": "10.7.2",
+    "@vueuse/nuxt": "10.8.0",
     "drizzle-kit": "0.20.14",
     "drizzle-orm": "0.29.3",
     "eslint": "8.56.0",
