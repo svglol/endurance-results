@@ -27,7 +27,14 @@
     </template>
     <div
       class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-2">
-      <UInput v-model="search" placeholder="Search..." size="xs" />
+      <UInput
+        v-model="search"
+        placeholder="Search..."
+        size="xs"
+        icon="i-heroicons-magnifying-glass-20-solid" />
+    </div>
+    <div
+      class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-2">
       <USelectMenu
         v-model="selectedColumns"
         :options="columns"
@@ -60,6 +67,7 @@
         Reset
       </UButton>
     </div>
+
     <div class="max-w-full">
       <UTable
         v-model:sort="sort"
