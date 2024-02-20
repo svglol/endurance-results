@@ -163,8 +163,12 @@ export default defineEventHandler(async () => {
     })
   }
 
+  const updated = data.flatMap(d => d.results).filter(r => r.data !== '')
+  if (updated.length > 0) {
+    clearStorage()
+  }
   return {
-    updatedELMS: data.flatMap(d => d.results).filter(r => r.data !== '').length,
+    updatedIMSA: updated.length,
   }
 })
 
