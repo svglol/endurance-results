@@ -28,14 +28,30 @@ export default defineEventHandler(async () => {
   if (!seriesData) return
 
   // only get results that don't exist
-  const resultsFlat = seriesData.seasons
-    .flatMap(s => s.events)
-    .flatMap(e => e.results.flatMap(r => r.name))
+  const allowedResults = [] as string[]
+  for (const results of allEventResults) {
+    for (const result of results.results) {
+      const eventNotFound = !seriesData?.seasons
+        .find(s => s.name.includes(results.season.split('_')[1]))
+        ?.events.find(e => e.name.includes(results.event.split('_')[1]))
 
-  const filteredResults = allEventResults.filter(eventResult => {
-    return !eventResult.results.some(result =>
-      resultsFlat.includes(convertResultName(result))
-    )
+      if (
+        seriesData?.seasons
+          .find(s => s.name.includes(results.season.split('_')[1]))
+          ?.events.find(e => e.name.includes(results.event.split('_')[1]))
+          ?.results.filter(r => r.name.includes(convertResultName(result)))
+          .length === 0 ||
+        eventNotFound
+      ) {
+        allowedResults.push(result)
+      }
+    }
+  }
+  const filteredResults = allEventResults.map(eventResult => {
+    return {
+      ...eventResult,
+      results: eventResult.results.filter(r => allowedResults.includes(r)),
+    }
   })
 
   // get csv data from fiawec
@@ -43,13 +59,17 @@ export default defineEventHandler(async () => {
     filteredResults.map(({ season, event, results }) => {
       return Promise.all(
         results.map(result =>
-          $fetch<string>(`http://alms.alkamelsystems.com/${result}`).then(
-            data => ({
+          $fetch<string>(`http://alms.alkamelsystems.com/${result}`)
+            .then(data => ({
               url: `http://alms.alkamelsystems.com/${result}`,
               result: convertResultName(result),
               data: minifyCsv(data),
-            })
-          )
+            }))
+            .catch(() => ({
+              url: `http://alms.alkamelsystems.com/${result}`,
+              result: convertResultName(result),
+              data: '',
+            }))
         )
       ).then(data => ({
         season: season.split('_')[1],
@@ -113,36 +133,40 @@ export default defineEventHandler(async () => {
 
       // check if result exists
       for (const result of results) {
-        if (
-          seriesData?.seasons
-            .filter(s => s.name.includes(season))[0]
-            .events.filter(e => e.name.includes(event))[0]
-            .results.filter(r => r.name.includes(result.result)).length === 0
-        ) {
-          const resultId = crypto.randomUUID()
-          await tx.insert(tableResult).values({
-            id: resultId,
-            name: result.result,
-            value: result.data,
-            url: result.url,
-            eventId,
-          })
-          seriesData.seasons
-            .filter(s => s.name.includes(season))[0]
-            .events.filter(e => e.name.includes(event))[0]
-            .results.push({
+        if (result.data !== '') {
+          if (
+            seriesData?.seasons
+              .filter(s => s.name.includes(season))[0]
+              .events.filter(e => e.name.includes(event))[0]
+              .results.filter(r => r.name.includes(result.result)).length === 0
+          ) {
+            const resultId = crypto.randomUUID()
+            await tx.insert(tableResult).values({
               id: resultId,
               name: result.result,
               value: result.data,
               url: result.url,
               eventId,
             })
+            seriesData.seasons
+              .filter(s => s.name.includes(season))[0]
+              .events.filter(e => e.name.includes(event))[0]
+              .results.push({
+                id: resultId,
+                name: result.result,
+                value: result.data,
+                url: result.url,
+                eventId,
+              })
+          }
         }
       }
     })
   }
 
-  return { updatedALMS: data.length }
+  return {
+    updatedALMS: data.flatMap(d => d.results).filter(r => r.data !== '').length,
+  }
 })
 
 async function getSeasonsWithEvents() {
@@ -158,14 +182,19 @@ async function getSeasonsWithEvents() {
   const seasonsWithEvents = []
   const seasonsData = Promise.all(
     seasons.map(season =>
-      $fetch<string>(`http://alms.alkamelsystems.com/?season=${season}`).then(
-        data => {
+      $fetch<string>(`http://alms.alkamelsystems.com/?season=${season}`)
+        .then(data => {
           return {
             data,
             season,
           }
-        }
-      )
+        })
+        .catch(() => {
+          return {
+            data: '',
+            season,
+          }
+        })
     )
   )
   for (const { data, season } of await seasonsData) {
@@ -190,7 +219,9 @@ async function getAllEventResults() {
         events.map(event =>
           $fetch<string>(
             `http://alms.alkamelsystems.com/?season=${season}&evvent=${event}`
-          ).then(data => ({ event, data }))
+          )
+            .then(data => ({ event, data }))
+            .catch(() => ({ event, data: '' }))
         )
       ).then(data => ({ season, events: data }))
     })

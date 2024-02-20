@@ -1,8 +1,9 @@
 export default defineEventHandler(async () => {
   const storage = useStorage('data')
 
-  const [fiawec, elms, alms] = await Promise.all([
+  const [fiawec, imsa, elms, alms] = await Promise.all([
     $fetch('/api/scrape/fiawec'),
+    $fetch('/api/scrape/imsa'),
     $fetch('/api/scrape/elms'),
     $fetch('/api/scrape/alms'),
   ])
@@ -10,7 +11,8 @@ export default defineEventHandler(async () => {
   if (
     fiawec.updatedFIAWEC > 0 ||
     elms.updatedELMS > 0 ||
-    alms.updatedALMS > 0
+    alms.updatedALMS > 0 ||
+    imsa.updatedIMSA > 0
   ) {
     const keys = await storage.getKeys()
 
@@ -21,5 +23,5 @@ export default defineEventHandler(async () => {
     }
   }
 
-  return [fiawec, elms, alms]
+  return [fiawec, elms, alms, imsa]
 })
