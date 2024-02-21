@@ -266,6 +266,14 @@ function convertResultName(input: string) {
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Grid ${session} Official Amended`
   }
+  if (
+    /01_Grid_Race_Official_Revised.CSV/.test(input) ||
+    /00_Grid_Race_Official_Revised.CSV/.test(input)
+  ) {
+    const parts = input.split('/')
+    const session = decodeURI(parts[4]).split('_')[1]
+    resultName = `Grid ${session} Official Revised`
+  }
   if (/Hour%20/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
