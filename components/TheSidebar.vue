@@ -260,8 +260,9 @@ const selectedSeason = ref(
     seasons.value[seasons.value.length - 1]
 )
 const selectedEvent = ref(
-  events.value.find(({ label }) => label === deSlugify(eventParam)) ??
-    events.value[events.value.length - 1]
+  events.value.find(
+    ({ label }) => label.toUpperCase() === deSlugify(eventParam)
+  ) ?? events.value[events.value.length - 1]
 )
 
 watch(selectedSeries, () => {
