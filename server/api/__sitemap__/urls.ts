@@ -16,8 +16,8 @@ export default defineCachedEventHandler(
 
     return series.flatMap(series =>
       series.seasons.flatMap(season =>
-        season.events.map(event =>
-          event.results.map(result => ({
+        season.events.flatMap(event =>
+          event.results.flatMap(result => ({
             loc: `/${createSlug(series.name)}/${createSlug(season.name)}/${createSlug(event.name)}/${createSlug(result.name)}`,
             _sitemap: 'pages',
           }))
