@@ -227,6 +227,14 @@ function convertResultName(input: string) {
     resultName = `Combined ${session}`
   }
   if (
+    /00_Grid_Race_Unofficial.CSV/.test(input) ||
+    /01_Grid_Race_Unofficial.CSV/.test(input)
+  ) {
+    const parts = input.split('/')
+    const session = decodeURI(parts[4]).split('_')[1]
+    resultName = `Grid ${session} Unofficial`
+  }
+  if (
     /00_Grid_Race_Official.CSV/.test(input) ||
     /01_Grid_Race_Official.CSV/.test(input)
   ) {
@@ -249,6 +257,14 @@ function convertResultName(input: string) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Grid ${session} Provisional Amended`
+  }
+  if (
+    /00_Grid_Race_Official_Amended.CSV/.test(input) ||
+    /01_Grid_Race_Official_Amended.CSV/.test(input)
+  ) {
+    const parts = input.split('/')
+    const session = decodeURI(parts[4]).split('_')[1]
+    resultName = `Grid ${session} Official Amended`
   }
   if (/Hour%20/.test(input)) {
     const parts = input.split('/')
