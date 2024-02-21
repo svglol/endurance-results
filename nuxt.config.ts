@@ -105,7 +105,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { isr: 60 },
     '/api/*': {
-      isr: false,
+      isr: 60 * 60,
       cache: {
         base: 'vercelKV',
       },
