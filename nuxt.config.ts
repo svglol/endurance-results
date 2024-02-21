@@ -94,6 +94,9 @@ export default defineNuxtConfig({
     description: 'Get all endurance racing results in one place!',
     defaultLocale: 'en',
   },
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+  },
   routeRules: {
     '/': { isr: 60 },
     '/api/*': {
