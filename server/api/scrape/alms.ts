@@ -46,7 +46,7 @@ export default defineEventHandler(async () => {
     clearStorage()
   }
   return {
-    updatedIMSA: updated.length,
+    updatedALMS: updated.length,
   }
 })
 
