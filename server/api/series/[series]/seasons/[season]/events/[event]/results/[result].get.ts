@@ -28,5 +28,5 @@ export default defineCachedEventHandler(
     })
     return test?.seasons[0].events[0].results[0] ?? null
   },
-  { maxAge: 60 * 60 }
+  { maxAge: 60 * 60 * 24 * 7 * 1000 }
 )
