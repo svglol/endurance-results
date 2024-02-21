@@ -185,6 +185,12 @@ const filteredItems = computed(() => {
           return sort.value.direction === 'asc' ? 1 : -1
         }
       } else {
+        if (a[sort.value.column] === '') {
+          return sort.value.direction === 'asc' ? 1 : -1
+        }
+        if (b[sort.value.column] === '') {
+          return sort.value.direction === 'asc' ? -1 : 1
+        }
         if (Number(a[sort.value.column]) < Number(b[sort.value.column])) {
           return sort.value.direction === 'asc' ? -1 : 1
         }
