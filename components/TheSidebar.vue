@@ -135,10 +135,22 @@ const results = computed(() => {
   )
 })
 
-const practiceResults = computed(() => {
-  const substrings = ['Practice', 'Test', 'Session']
+const testingResults = computed(() => {
+  const substrings = ['Test', 'Session']
   const regex = new RegExp(substrings.join('|'))
   return results.value.filter(({ label }) => regex.test(label))
+})
+
+const practiceResults = computed(() => {
+  const substrings = ['Practice']
+  const regex = new RegExp(substrings.join('|'))
+  return results.value.filter(
+    ({ label }) =>
+      regex.test(label) &&
+      !testingResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label
+      )
+  )
 })
 
 const qualifyingResults = computed(() => {
@@ -149,6 +161,9 @@ const qualifyingResults = computed(() => {
     ({ label }) =>
       regex.test(label) &&
       !practiceResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label
+      ) &&
+      !testingResults.value.find(
         ({ label: practiceLabel }) => practiceLabel === label
       )
   )
@@ -166,6 +181,9 @@ const warmupResults = computed(() => {
       ) &&
       !qualifyingResults.value.find(
         ({ label: qualifyingLabel }) => qualifyingLabel === label
+      ) &&
+      !testingResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label
       )
   )
 })
@@ -185,6 +203,9 @@ const raceResults = computed(() => {
       ) &&
       !warmupResults.value.find(
         ({ label: warmupLabel }) => warmupLabel === label
+      ) &&
+      !testingResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label
       )
   )
 })
@@ -205,6 +226,9 @@ const otherResults = computed(() => {
     .filter(
       ({ label }) => !practiceResults.value.some(({ label: l }) => l === label)
     )
+    .filter(
+      ({ label }) => !testingResults.value.some(({ label: l }) => l === label)
+    )
 })
 
 const accordionItems = computed(() => {
@@ -212,6 +236,12 @@ const accordionItems = computed(() => {
     label: string
     items?: { label: string; value: string }[]
   }[]
+  if (testingResults.value.length > 0) {
+    items.push({
+      label: 'Testing',
+      items: testingResults.value,
+    })
+  }
   if (practiceResults.value.length > 0) {
     items.push({
       label: 'Practice',
