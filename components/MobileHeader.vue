@@ -12,6 +12,7 @@
       </span>
     </NuxtLink>
     <div class="flex flex-row gap-2">
+      <SearchButton disable-shortcut />
       <DarkToggle />
       <UButton
         :icon="toggleMobileMenu ? 'i-heroicons-x-mark' : 'i-heroicons:bars-3'"

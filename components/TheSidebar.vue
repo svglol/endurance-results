@@ -3,7 +3,8 @@
     class="overflow-y-auto lg:block lg:max-h-screen lg:sticky py-4 lg:px-4 lg:top-0 lg:h-screen">
     <div class="flex flex-col gap-4 justify-between w-full">
       <div class="hidden relative lg:flex flex-col gap-0">
-        <div class="absolute right-0 top-0 z-20">
+        <div class="absolute right-0 top-0 z-20 flex flex-row gap-1">
+          <SearchButton />
           <DarkToggle />
         </div>
         <NuxtLink
@@ -300,13 +301,47 @@ watch(selectedSeries, () => {
 })
 
 watch(selectedSeason, () => {
-  selectedEvent.value = events.value[events.value.length - 1]
+  const { event: updatedEventParam } = useRoute(
+    'series-season-event-result'
+  ).params
+  if (updatedEventParam !== eventParam) {
+    selectedEvent.value =
+      events.value.find(
+        ({ label }) => label.toUpperCase() === deSlugify(updatedEventParam)
+      ) ?? events.value[events.value.length - 1]
+  } else {
+    selectedEvent.value = events.value[events.value.length - 1]
+  }
 })
 
 watch(selectedEvent, () => {
   navigateTo(createSlug(results.value[0].label), {
     replace: true,
   })
+})
+
+watchEffect(() => {
+  const {
+    series: seriesParam,
+    season: seasonParam,
+    event: eventParam,
+  } = useRoute('series-season-event-result').params
+  if (seriesParam) {
+    selectedSeries.value =
+      series.value.find(({ label }) => label === deSlugify(seriesParam)) ??
+      series.value[0]
+  }
+  if (seasonParam) {
+    selectedSeason.value =
+      seasons.value.find(({ label }) => label === deSlugify(seasonParam)) ??
+      seasons.value[seasons.value.length - 1]
+  }
+  if (eventParam) {
+    selectedEvent.value =
+      events.value.find(
+        ({ label }) => label.toUpperCase() === deSlugify(eventParam)
+      ) ?? events.value[events.value.length - 1]
+  }
 })
 
 function createSlug(label: string) {
