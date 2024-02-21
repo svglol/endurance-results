@@ -168,24 +168,16 @@ function parseEventResults(
 
 function convertResultName(input: string) {
   const fileName = input.replace('.CSV', '').split('/').pop() || ''
-  const parts = fileName.split('_')
-  let resultName = parts
-    .slice(-2)
-    .join(' ')
-    .replace('Classification ', '')
-    .replace('Results ', '')
-  resultName = resultName.replace('CombinedCombined', 'Combined')
+  let resultName = ''
 
-  if (/_Hour/.test(input)) {
+  if (/_Hour/.test(input) && !/Hour%20/.test(input)) {
     const parts = input.split('/')
     const hour = decodeURI(parts[5].split('_')[1])
     const classification = decodeURIComponent(parts[6])
       .replace('.CSV', '')
       .split('_')[2]
-    const title = `${classification} ${hour}`
-    resultName = title
-  }
-  if (
+    resultName = `${classification} ${hour}`
+  } else if (
     /03_Results.CSV/.test(input) ||
     /05_Results.CSV/.test(input) ||
     /05_Results%20by%20Hour.CS/.test(input)
@@ -193,88 +185,58 @@ function convertResultName(input: string) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `${session}`
-  }
-  if (/03_Provisional%20Results.CSV/.test(input)) {
+  } else if (/03_Provisional%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Provisional ${session}`
-  }
-  if (/03_Provisional%20REVISED%20Results.CSV/.test(input)) {
+  } else if (/03_Provisional%20REVISED%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Provisional Revised ${session}`
-  }
-  if (/03_Official%20Results.CSV/.test(input)) {
+  } else if (/03_Official%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Official ${session}`
-  }
-  if (/03_Unofficial%20Results.CSV/.test(input)) {
+  } else if (/03_Unofficial%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Unofficial ${session}`
-  }
-  if (
+  } else if (
     /06_Combined%20Practice%20Results.CSV/.test(input) ||
     /06_Combined%20Practice%20Results_Practice%203.CSV/.test(input) ||
     /06_CombinedClassification_Combined%20Practice.CSV/.test(input) ||
     /06_CombinedClassification_Combine%20Practice.CSV/.test(input) ||
-    /06_Combined%20Practice%20Results_Practice%202.CS/.test(input) ||
-    /06_Combined%20Practice%20Results_Practice%204.CSV/.test(input)
+    /06_Combined%20Practice%20Results_Practice%2.CS/.test(input) ||
+    /06_Combined%20Practice%20Results_Practice%4.CSV/.test(input)
   ) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Combined ${session}`
-  }
-  if (
+  } else if (
     /00_Grid_Race_Unofficial.CSV/.test(input) ||
-    /01_Grid_Race_Unofficial.CSV/.test(input)
-  ) {
-    const parts = input.split('/')
-    const session = decodeURI(parts[4]).split('_')[1]
-    resultName = `Grid ${session} Unofficial`
-  }
-  if (
+    /01_Grid_Race_Unofficial.CSV/.test(input) ||
     /00_Grid_Race_Official.CSV/.test(input) ||
-    /01_Grid_Race_Official.CSV/.test(input)
-  ) {
-    const parts = input.split('/')
-    const session = decodeURI(parts[4]).split('_')[1]
-    resultName = `Grid ${session} Official`
-  }
-  if (
+    /01_Grid_Race_Official.CSV/.test(input) ||
     /00_Grid_Race_Provisional.CSV/.test(input) ||
-    /01_Grid_Race_Provisional.CSV/.test(input)
-  ) {
-    const parts = input.split('/')
-    const session = decodeURI(parts[4]).split('_')[1]
-    resultName = `Grid ${session} Provisional`
-  }
-  if (
+    /01_Grid_Race_Provisional.CSV/.test(input) ||
     /00_Grid_Race_Provisional_Amended.CSV/.test(input) ||
-    /01_Grid_Race_Provisional_Amended.CSV/.test(input)
-  ) {
-    const parts = input.split('/')
-    const session = decodeURI(parts[4]).split('_')[1]
-    resultName = `Grid ${session} Provisional Amended`
-  }
-  if (
+    /01_Grid_Race_Provisional_Amended.CSV/.test(input) ||
     /00_Grid_Race_Official_Amended.CSV/.test(input) ||
-    /01_Grid_Race_Official_Amended.CSV/.test(input)
+    /01_Grid_Race_Official_Amended.CSV/.test(input) ||
+    /00_Grid_Race_Official_Revised.CSV/.test(input) ||
+    /01_Grid_Race_Official_Revised.CSV/.test(input)
   ) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
-    resultName = `Grid ${session} Official Amended`
-  }
-  if (
-    /01_Grid_Race_Official_Revised.CSV/.test(input) ||
-    /00_Grid_Race_Official_Revised.CSV/.test(input)
-  ) {
-    const parts = input.split('/')
-    const session = decodeURI(parts[4]).split('_')[1]
-    resultName = `Grid ${session} Official Revised`
-  }
-  if (/Hour%20/.test(input)) {
+    const type = input.includes('Unofficial')
+      ? 'Unofficial'
+      : input.includes('Official')
+        ? 'Official'
+        : 'Provisional'
+    const amended = input.includes('Amended') ? 'Amended' : ''
+    const revised = input.includes('Revised') ? 'Revised' : ''
+    resultName = `Grid ${session} ${type} ${revised}${amended}`.trim()
+  } else if (/Hour%20/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     let hour = decodeURI(parts[5]).replace('_', '')
@@ -282,6 +244,14 @@ function convertResultName(input: string) {
       hour = removeBeforeSequence(hour, 'Hour')
     }
     resultName = `${session} ${hour}`
+  } else {
+    const parts = fileName.split('_')
+    resultName = parts
+      .slice(-2)
+      .join(' ')
+      .replace('Classification ', '')
+      .replace('Results ', '')
+    resultName = resultName.replace('CombinedCombined', 'Combined')
   }
   return decodeURI(resultName)
 }
