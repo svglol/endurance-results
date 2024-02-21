@@ -26,7 +26,7 @@
       </div>
     </template>
     <div
-      class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-2">
+      class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-2 lg:hidden">
       <UInput
         v-model="search"
         placeholder="Search..."
@@ -35,6 +35,12 @@
     </div>
     <div
       class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-2">
+      <UInput
+        v-model="search"
+        placeholder="Search..."
+        size="xs"
+        icon="i-heroicons-magnifying-glass-20-solid"
+        class="hidden lg:block" />
       <USelectMenu
         v-model="selectedColumns"
         :options="columns"
