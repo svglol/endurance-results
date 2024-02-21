@@ -136,7 +136,7 @@ const results = computed(() => {
 })
 
 const practiceResults = computed(() => {
-  const substrings = ['Practice', 'Test']
+  const substrings = ['Practice', 'Test', 'Session']
   const regex = new RegExp(substrings.join('|'))
   return results.value.filter(({ label }) => regex.test(label))
 })
@@ -155,7 +155,7 @@ const qualifyingResults = computed(() => {
 })
 
 const warmupResults = computed(() => {
-  const substrings = ['Warmup', 'Warm-Up']
+  const substrings = ['Warmup', 'Warm-Up', 'Warm up', 'Warm-up', 'Warm Up']
   const regex = new RegExp(substrings.join('|'))
   // Exclude labels already matched by practiceResults and qualifyingResults
   return results.value.filter(
