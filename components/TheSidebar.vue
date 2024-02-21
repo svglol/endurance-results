@@ -142,7 +142,7 @@ const practiceResults = computed(() => {
 })
 
 const qualifyingResults = computed(() => {
-  const substrings = ['Qualifying', 'Hyperpole']
+  const substrings = ['Qualifying', 'Hyperpole', 'Grid']
   const regex = new RegExp(substrings.join('|'))
   // Exclude labels already matched by practiceResults
   return results.value.filter(
