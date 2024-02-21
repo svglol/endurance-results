@@ -96,6 +96,7 @@ export default defineNuxtConfig({
   },
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
+    cacheMaxAgeSeconds: 3600,
   },
   routeRules: {
     '/': { isr: 60 },
@@ -113,6 +114,12 @@ export default defineNuxtConfig({
     },
     defaults: {
       cacheMaxAgeSeconds: 60 * 60 * 24 * 7 * 1000, // 7 days
+    },
+  },
+  sitemap: {
+    runtimeCacheStorage: {
+      driver: 'vercelKV',
+      binding: 'OG_IMAGE_CACHE',
     },
   },
   nitro: {
