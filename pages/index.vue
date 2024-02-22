@@ -8,7 +8,7 @@
         <UIcon name="twemoji:dashing-away" />
       </span>
       <span
-        class="text-2xl lg:text-8xl font-light text-center dark:text-white text-black">
+        class="text-2xl lg:text-6xl xl:text-8xl font-light text-center dark:text-white text-black">
         Endurance Results
       </span>
     </div>

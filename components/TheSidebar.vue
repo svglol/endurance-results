@@ -1,12 +1,8 @@
 <template>
   <aside
     class="overflow-y-auto lg:block lg:max-h-screen lg:sticky py-4 lg:px-4 lg:top-0 lg:h-screen">
-    <div class="flex flex-col gap-4 justify-between w-full">
-      <div class="hidden relative lg:flex flex-col gap-0">
-        <div class="absolute right-0 top-0 z-20 flex flex-row gap-1">
-          <SearchButton />
-          <DarkToggle />
-        </div>
+    <div class="flex flex-col gap-2 justify-between w-full">
+      <div class="hidden relative lg:flex flex-col gap-0 justify-between">
         <NuxtLink
           to="/"
           class="flex flex-col gap-1"
@@ -20,6 +16,10 @@
             Endurance Results
           </span>
         </NuxtLink>
+      </div>
+      <div class="flex flex-row gap-2 justify-center">
+        <SearchButton />
+        <DarkToggle />
       </div>
       <div class="flex flex-col gap-1">
         <UFormGroup label="Series">

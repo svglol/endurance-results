@@ -4,7 +4,7 @@
       icon="i-heroicons-magnifying-glass-20-solid"
       color="gray"
       variant="ghost"
-      aria-label="Theme"
+      aria-label="Search"
       @click="isOpen = true" />
   </UTooltip>
   <UModal v-model="isOpen">

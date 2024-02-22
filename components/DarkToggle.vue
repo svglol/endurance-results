@@ -1,11 +1,13 @@
 <template>
   <ClientOnly tag="span">
-    <UButton
-      :icon="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
-      color="gray"
-      variant="ghost"
-      aria-label="Theme"
-      @click="toggle" />
+    <UTooltip text="Toggle Theme">
+      <UButton
+        :icon="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
+        color="gray"
+        variant="ghost"
+        aria-label="Theme"
+        @click="toggle" />
+    </UTooltip>
     <template #fallback>
       <div class="h-8 w-8" />
     </template>
