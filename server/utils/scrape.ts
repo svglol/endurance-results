@@ -33,15 +33,15 @@ export function sortResultsToInsert(
   for (const results of allEventResults) {
     for (const result of results.results) {
       const eventNotFound = !seriesData?.seasons
-        .find(s => s.name.includes(results.season.split('_')[1]))
-        ?.events.find(e => e.name.includes(results.event.split('_')[1]))
+        .find(s => s.name === results.season.split('_')[1])
+        ?.events.find(e => e.name === results.event.split('_')[1])
 
       if (
         seriesData?.seasons
-          .find(s => s.name.includes(results.season.split('_')[1]))
-          ?.events.find(e => e.name.includes(results.event.split('_')[1]))
-          ?.results.filter(r => r.name.includes(convertResultName(result)))
-          .length === 0 ||
+          .find(s => s.name === results.season.split('_')[1])
+          ?.events.find(e => e.name === results.event.split('_')[1])
+          ?.results.filter(r => r.name === convertResultName(result)).length ===
+          0 ||
         eventNotFound
       ) {
         allowedResults.push(result)
@@ -65,9 +65,7 @@ export async function insertData(
     await db.transaction(async tx => {
       // check if season exists
       let seasonId = ''
-      if (
-        seriesData?.seasons.filter(s => s.name.includes(season)).length === 0
-      ) {
+      if (seriesData?.seasons.filter(s => s.name === season).length === 0) {
         seasonId = crypto.randomUUID()
         await tx.insert(tableSeason).values({
           id: seasonId,
@@ -81,15 +79,15 @@ export async function insertData(
           events: [],
         })
       } else {
-        seasonId = seriesData?.seasons.filter(s => s.name.includes(season))[0]
+        seasonId = seriesData?.seasons.filter(s => s.name === season)[0]
           .id as string
       }
       // check if event exists
       let eventId = ''
       if (
         seriesData?.seasons
-          .filter(s => s.name.includes(season))[0]
-          .events.filter(e => e.name.includes(event)).length === 0
+          .filter(s => s.name === season)[0]
+          .events.filter(e => e.name === event).length === 0
       ) {
         eventId = crypto.randomUUID()
         await tx.insert(tableEvent).values({
@@ -98,7 +96,7 @@ export async function insertData(
           seasonId,
         })
         seriesData.seasons
-          .filter(s => s.name.includes(season))[0]
+          .filter(s => s.name === season)[0]
           .events.push({
             id: eventId,
             name: event,
@@ -107,17 +105,17 @@ export async function insertData(
           })
       } else {
         eventId = seriesData?.seasons
-          .filter(s => s.name.includes(season))[0]
-          .events.filter(e => e.name.includes(event))[0].id as string
+          .filter(s => s.name === season)[0]
+          .events.filter(e => e.name === event)[0].id as string
       }
       // check if result exists
       for (const result of results) {
         if (result.data !== '') {
           if (
             seriesData?.seasons
-              .filter(s => s.name.includes(season))[0]
-              .events.filter(e => e.name.includes(event))[0]
-              .results.filter(r => r.name.includes(result.result)).length === 0
+              .filter(s => s.name === season)[0]
+              .events.filter(e => e.name === event)[0]
+              .results.filter(r => r.name === result.result).length === 0
           ) {
             const resultId = crypto.randomUUID()
             await tx.insert(tableResult).values({
@@ -128,8 +126,8 @@ export async function insertData(
               eventId,
             })
             seriesData.seasons
-              .filter(s => s.name.includes(season))[0]
-              .events.filter(e => e.name.includes(event))[0]
+              .filter(s => s.name === season)[0]
+              .events.filter(e => e.name === event)[0]
               .results.push({
                 id: resultId,
                 name: result.result,
