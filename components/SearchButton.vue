@@ -12,7 +12,6 @@
       :autoselect="false"
       :groups="groups"
       command-attribute="title"
-      nullable
       :fuse="{
         fuseOptions: { keys: ['title', 'category'] },
       }"
@@ -72,7 +71,7 @@ defineShortcuts({
 function onSelect(option: { to: string }) {
   if (option && option.to) {
     navigateTo(option.to)
+    isOpen.value = false
   }
-  isOpen.value = false
 }
 </script>
