@@ -80,6 +80,8 @@
 </template>
 
 <script lang="ts" setup>
+import { promiseTimeout } from '@vueuse/core'
+
 const { data } = $defineProps<{
   data: SeriesWithRelations[] | null
 }>()
@@ -297,52 +299,53 @@ const selectedEvent = ref(
 )
 
 watch(selectedSeries, () => {
-  selectedSeason.value = seasons.value[seasons.value.length - 1]
+  if (!updateRoute) {
+    selectedSeason.value = seasons.value[seasons.value.length - 1]
+  }
 })
 
 watch(selectedSeason, () => {
-  const { event: updatedEventParam } = useRoute(
-    'series-season-event-result'
-  ).params
-  if (updatedEventParam !== eventParam) {
-    selectedEvent.value =
-      events.value.find(
-        ({ label }) => label.toUpperCase() === deSlugify(updatedEventParam)
-      ) ?? events.value[events.value.length - 1]
-  } else {
+  if (!updateRoute) {
     selectedEvent.value = events.value[events.value.length - 1]
   }
 })
 
 watch(selectedEvent, () => {
-  navigateTo(createSlug(results.value[0].label), {
-    replace: true,
-  })
+  if (!updateRoute) {
+    navigateTo(createSlug(results.value[0].label), {
+      replace: true,
+    })
+  }
 })
 
-watchEffect(() => {
-  const {
-    series: seriesParam,
-    season: seasonParam,
-    event: eventParam,
-  } = useRoute('series-season-event-result').params
-  if (seriesParam) {
-    selectedSeries.value =
-      series.value.find(({ label }) => label === deSlugify(seriesParam)) ??
-      series.value[0]
+const route = useRoute('series-season-event-result')
+let updateRoute = false
+watch(
+  () => route.params,
+  async () => {
+    updateRoute = true
+    if (route.params.series) {
+      selectedSeries.value =
+        series.value.find(
+          ({ label }) => label === deSlugify(route.params.series)
+        ) ?? series.value[0]
+    }
+    if (route.params.season) {
+      selectedSeason.value =
+        seasons.value.find(
+          ({ label }) => label === deSlugify(route.params.season)
+        ) ?? seasons.value[seasons.value.length - 1]
+    }
+    if (route.params.event) {
+      selectedEvent.value =
+        events.value.find(
+          ({ label }) => label.toUpperCase() === deSlugify(route.params.event)
+        ) ?? events.value[events.value.length - 1]
+    }
+    await promiseTimeout(1000)
+    updateRoute = false
   }
-  if (seasonParam) {
-    selectedSeason.value =
-      seasons.value.find(({ label }) => label === deSlugify(seasonParam)) ??
-      seasons.value[seasons.value.length - 1]
-  }
-  if (eventParam) {
-    selectedEvent.value =
-      events.value.find(
-        ({ label }) => label.toUpperCase() === deSlugify(eventParam)
-      ) ?? events.value[events.value.length - 1]
-  }
-})
+)
 
 function createSlug(label: string) {
   return `/${slugify(selectedSeries.value.label)}/${slugify(selectedSeason.value.label)}/${slugify(selectedEvent.value.label)}/${slugify(label)}`
