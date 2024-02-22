@@ -17,7 +17,7 @@
           </span>
         </NuxtLink>
       </div>
-      <div class="flex flex-row gap-2 justify-center">
+      <div class="hidden lg:flex flex-row gap-2 justify-center">
         <SearchButton />
         <DarkToggle />
       </div>
