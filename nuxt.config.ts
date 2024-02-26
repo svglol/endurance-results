@@ -1,5 +1,3 @@
-import process from 'node:process'
-const sw = process.env.SW === 'true'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -41,9 +39,7 @@ export default defineNuxtConfig({
     },
   },
   pwa: {
-    strategies: sw ? 'injectManifest' : 'generateSW',
-    srcDir: sw ? 'service-worker' : undefined,
-    filename: sw ? 'sw.ts' : undefined,
+    strategies: 'generateSW',
     registerType: 'autoUpdate',
     manifest: {
       name: 'Endurance Results',
