@@ -1,6 +1,6 @@
 import { parse } from 'node-html-parser'
 
-export default defineEventHandler(async () => {
+export default upstashWrappedResponseHandler(async () => {
   const allEventResults = await getAllEventResults()
 
   // get series data from db

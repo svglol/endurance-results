@@ -1,3 +1,4 @@
+import type { EventHandler, EventHandlerRequest } from 'h3'
 import {
   series as tableSeries,
   event as tableEvent,
@@ -277,3 +278,20 @@ export function minifyCsv(csv: string) {
   const minifiedCsv = topLine.concat(`\n${updatedLines.join(`\n`)}`)
   return minifiedCsv
 }
+
+export const upstashWrappedResponseHandler = <T extends EventHandlerRequest, D>(
+  handler: EventHandler<T, D>
+): EventHandler<T, D> =>
+  defineEventHandler<T>(async event => {
+    const signature = getHeader(event, 'upstash-signature')
+    if (!signature) {
+      return createError({ statusCode: 401, statusMessage: 'Unauthorized' })
+    }
+    try {
+      const response = await handler(event)
+      return { response }
+    } catch (err) {
+      // Error handling
+      return { err }
+    }
+  })
