@@ -1,6 +1,12 @@
 import { parse } from 'node-html-parser'
 
-export default upstashWrappedResponseHandler(async () => {
+export default upstashWrappedResponseHandler(async event => {
+  const { send, close } = useSSE(event, 'sse:event')
+
+  const interval = setInterval(() => {
+    send(id => ({ id, message: 'keep-alive' }))
+  }, 5000)
+  event.node.req.on('close', () => clearInterval(interval))
   const allEventResults = await getAllEventResults()
 
   // get series data from db
@@ -45,9 +51,10 @@ export default upstashWrappedResponseHandler(async () => {
   if (updated.length > 0) {
     clearStorage()
   }
-  return {
-    updatedFIAWEC: updated.length,
-  }
+  send(id => ({ id, message: `${updated.length} results updated` }))
+  setTimeout(() => {
+    close()
+  }, 1000)
 })
 
 async function getSeasonsWithEvents() {
