@@ -284,17 +284,19 @@ export const upstashWrappedResponseHandler = <T extends EventHandlerRequest, D>(
   handler: EventHandler<T, D>
 ): EventHandler<T, D> =>
   defineEventHandler<T>(async event => {
-    const signature = getHeader(event, 'upstash-signature')
-    if (!signature) {
-      return createError({ statusCode: 401, statusMessage: 'Unauthorized' })
-    }
-    const r = new Receiver({
-      currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY as string,
-      nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY as string,
-    })
-    const isValid = await r.verify({ signature, body: '' })
-    if (!isValid) {
-      return createError({ statusCode: 401, statusMessage: 'Unauthorized' })
+    if (process.env.NODE_ENV !== 'development') {
+      const signature = getHeader(event, 'upstash-signature')
+      if (!signature) {
+        return createError({ statusCode: 401, statusMessage: 'Unauthorized' })
+      }
+      const r = new Receiver({
+        currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY as string,
+        nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY as string,
+      })
+      const isValid = await r.verify({ signature, body: '' })
+      if (!isValid) {
+        return createError({ statusCode: 401, statusMessage: 'Unauthorized' })
+      }
     }
     try {
       const response = await handler(event)
