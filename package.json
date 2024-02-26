@@ -39,6 +39,7 @@
     "@types/node": "20.11.20",
     "@typescript-eslint/eslint-plugin": "7.0.2",
     "@typescript-eslint/parser": "7.0.2",
+    "@upstash/qstash": "^2.3.0",
     "@vercel/kv": "1.0.1",
     "@vite-pwa/nuxt": "0.5.0",
     "@vue-macros/nuxt": "1.9.21",

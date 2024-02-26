@@ -44,6 +44,9 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: 7.0.2
     version: 7.0.2(eslint@8.56.0)(typescript@5.3.3)
+  '@upstash/qstash':
+    specifier: ^2.3.0
+    version: 2.3.0
   '@vercel/kv':
     specifier: 1.0.1
     version: 1.0.1
@@ -5035,6 +5038,13 @@ packages:
       - rollup
     dev: true
 
+  /@upstash/qstash@2.3.0:
+    resolution: {integrity: sha512-p4L1n5/OWk8UUJJ6S5iInx+1YXm1LseTXthuFhJ7dY08NSKkGGJqipjH4/2jTxxhXMiXARRng+SQyF71NTnnBA==}
+    dependencies:
+      crypto-js: 4.2.0
+      jose: 4.15.4
+    dev: true
+
   /@upstash/redis@1.25.1:
     resolution: {integrity: sha512-ACj0GhJ4qrQyBshwFgPod6XufVEfKX2wcaihsEvSdLYnY+m+pa13kGt1RXm/yTHKf4TQi/Dy2A8z/y6WUEOmlg==}
     dependencies:
@@ -9887,6 +9897,10 @@ packages:
   /jmespath@0.16.0:
     resolution: {integrity: sha512-9FzQjJ7MATs1tSpnco1K6ayiYE3figslrXA72G2HQ/n76RzvYlofyi5QM+iX4YRs/pu3yzxlVQSST23+dMDknw==}
     engines: {node: '>= 0.6.0'}
+    dev: true
+
+  /jose@4.15.4:
+    resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
     dev: true
 
   /js-base64@3.7.7:
@@ -15437,7 +15451,6 @@ packages:
 
   /workbox-google-analytics@7.0.0:
     resolution: {integrity: sha512-MEYM1JTn/qiC3DbpvP2BVhyIH+dV/5BjHk756u9VbwuAhu0QHyKscTnisQuz21lfRpOwiS9z4XdqeVAKol0bzg==}
-    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
     dependencies:
       workbox-background-sync: 7.0.0
       workbox-core: 7.0.0
