@@ -3,8 +3,7 @@ export default upstashWrappedResponseHandler(async event => {
 
   const interval = setInterval(() => {
     send(id => ({ id, message: 'keep-alive' }))
-  }, 5000)
-  event.node.req.on('close', () => clearInterval(interval))
+  }, 9000)
   await Promise.all([
     $fetch('/api/scrape/fiawec'),
     $fetch('/api/scrape/imsa'),
@@ -13,6 +12,7 @@ export default upstashWrappedResponseHandler(async event => {
   ])
   send(id => ({ id, message: `results updated` }))
   setTimeout(() => {
+    clearInterval(interval)
     close()
   }, 1000)
 })

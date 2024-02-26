@@ -5,8 +5,7 @@ export default upstashWrappedResponseHandler(async event => {
 
   const interval = setInterval(() => {
     send(id => ({ id, message: 'keep-alive' }))
-  }, 5000)
-  event.node.req.on('close', () => clearInterval(interval))
+  }, 9000)
   const allEventResults = await getAllEventResults()
   // get series data from db
   const seriesData = await getSeriesData('IMSA')
@@ -54,6 +53,7 @@ export default upstashWrappedResponseHandler(async event => {
   }
   send(id => ({ id, message: `${updated.length} results updated` }))
   setTimeout(() => {
+    clearInterval(interval)
     close()
   }, 1000)
 })
