@@ -1,16 +1,9 @@
 import { parse } from 'node-html-parser'
 
-export default upstashWrappedResponseHandler(async event => {
-  const { send, close } = useSSE(event, 'sse:event')
-
-  const interval = setInterval(() => {
-    send(id => ({ id, message: 'keep-alive' }))
-  }, 9000)
-  const allEventResults = await getAllEventResults()
-
+export default upstashWrappedResponseHandler(async () => {
   // get series data from db
   const seriesData = await getSeriesData('ALMS')
-
+  const allEventResults = await getAllEventResults(seriesData)
   // only get results that don't exist
   const filteredResults = sortResultsToInsert(
     seriesData,
@@ -50,11 +43,8 @@ export default upstashWrappedResponseHandler(async event => {
   if (updated.length > 0) {
     clearStorage()
   }
-  send(id => ({ id, message: `${updated.length} results updated` }))
-  setTimeout(() => {
-    clearInterval(interval)
-    close()
-  }, 1000)
+
+  return { updatedALMS: updated.length }
 })
 
 async function getSeasonsWithEvents() {
@@ -98,8 +88,18 @@ async function getSeasonsWithEvents() {
   return seasonsWithEvents
 }
 
-async function getAllEventResults() {
-  const seasonsWithEvents = await getSeasonsWithEvents()
+async function getAllEventResults(seriesData: SeriesData | undefined) {
+  let seasonsWithEvents = await getSeasonsWithEvents()
+  if (seriesData) {
+    seasonsWithEvents = seasonsWithEvents.filter(
+      s =>
+        !seriesData.seasons.find(
+          (season, i) =>
+            season.name === s.season.split('_')[1] &&
+            i !== seasonsWithEvents.length - 1
+        )
+    )
+  }
   const allEventResults = []
   const data = await Promise.all(
     seasonsWithEvents.map(({ season, events }) => {
