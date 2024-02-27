@@ -42,7 +42,7 @@ export default upstashWrappedResponseHandler(async () => {
 
   const updated = data.flatMap(d => d.results).filter(r => r.data !== '')
   if (updated.length > 0) {
-    clearStorage()
+    await clearStorage()
   }
   return { updatedFIAWEC: updated.length }
 })
