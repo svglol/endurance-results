@@ -273,7 +273,7 @@ useSeoMeta({
   ogSiteName: 'Endurance Results',
   twitterTitle: `${deSlugify(series)} - ${deSlugify(season)} - ${deSlugify(event)} - ${data.value?.name}`,
   twitterDescription: 'Get all endurance racing results in one place!',
-  twitterCard: 'summary',
+  twitterCard: 'summary_large_image',
 })
 
 function reset() {

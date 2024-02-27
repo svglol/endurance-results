@@ -99,7 +99,13 @@ export default defineNuxtConfig({
     },
   },
   ogImage: {
-    enabled: false,
+    runtimeCacheStorage: {
+      driver: 'cloudflareKVBinding',
+      binding: 'OG_IMAGE_CACHE',
+    },
+    defaults: {
+      cacheMaxAgeSeconds: 60 * 60 * 24 * 7 * 1000, // 7 days
+    },
   },
   nitro: {
     storage: {

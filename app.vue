@@ -53,12 +53,12 @@ useSeoMeta({
   ogType: 'website',
   ogUrl: useSiteConfig().siteUrl + useRoute().path,
   ogSiteName: 'Endurance Results',
-  ogImage: '/og.png',
-  twitterImage: '/og.png',
   twitterTitle: 'Endurance Results',
   twitterDescription: 'Get all endurance racing results in one place!',
-  twitterCard: 'summary',
+  twitterCard: 'summary_large_image',
 })
+
+defineOgImage({ component: 'OgImage' })
 </script>
 
 <style>
