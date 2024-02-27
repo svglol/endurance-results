@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full w-full red-gradient p-4">
-    <div class="black-gradient h-full w-full rounded-3xl">
+  <div class="h-full w-full bg-orange-500 p-4">
+    <div class="bg-zinc-900 h-full w-full rounded-3xl">
       <div
         v-if="title === ''"
         class="flex flex-row items-center gap-4 relative mx-auto my-auto">
@@ -54,15 +54,3 @@ $defineProps<{
   description?: String
 }>()
 </script>
-
-<style scoped>
-.red-gradient {
-  background: #fb923c;
-  background: linear-gradient(135deg, #fb923c 0%, #c2410c 100%);
-}
-
-.black-gradient {
-  background: #09090b;
-  background: linear-gradient(135deg, #09090b 0%, #27272a 100%);
-}
-</style>
