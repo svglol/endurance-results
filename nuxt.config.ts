@@ -94,32 +94,23 @@ export default defineNuxtConfig({
     sources: ['/api/__sitemap__/urls'],
     cacheMaxAgeSeconds: 3600,
     runtimeCacheStorage: {
-      driver: 'vercelKV',
-      binding: 'OG_IMAGE_CACHE',
-    },
-  },
-  routeRules: {
-    '/': { isr: 60 },
-    '/api/*': {
-      isr: 60,
-      cache: {
-        base: 'vercelKV',
-      },
+      driver: 'cloudflareKVBinding',
+      binding: 'SITEMAP_CACHE',
     },
   },
   ogImage: {
-    runtimeCacheStorage: {
-      driver: 'vercelKV',
-      binding: 'OG_IMAGE_CACHE',
-    },
-    defaults: {
-      cacheMaxAgeSeconds: 60 * 60 * 24 * 7 * 1000, // 7 days
-    },
+    enabled: false,
   },
   nitro: {
     storage: {
-      cache: { driver: 'vercelKV' },
-      data: { driver: 'vercelKV' },
+      cache: {
+        driver: 'cloudflareKVBinding',
+        binding: 'STORAGE',
+      },
+      data: {
+        driver: 'cloudflare-kv-binding',
+        binding: 'STORAGE',
+      },
     },
   },
 })

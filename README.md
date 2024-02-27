@@ -24,10 +24,6 @@ DATABASE_AUTH_TOKEN = ''
 
 NUXT_PUBLIC_SITE_URL=https://localhost:3000
 
-KV_REST_API_READ_ONLY_TOKEN=""
-KV_REST_API_TOKEN=""
-KV_REST_API_URL=""
-KV_URL=""
 ```
 
 ## Development Server
