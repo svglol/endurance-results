@@ -3,7 +3,7 @@ import { parse } from 'node-html-parser'
 export default upstashWrappedResponseHandler(async () => {
   // get series data from db
   const seriesData = await getSeriesData('FIA WEC')
-  const allEventResults = await getAllEventResults(seriesData)
+  const allEventResults = await getAllEventResults()
 
   // only get results that don't exist
   const filteredResults = sortResultsToInsert(
@@ -88,18 +88,8 @@ async function getSeasonsWithEvents() {
   return seasonsWithEvents
 }
 
-async function getAllEventResults(seriesData: SeriesData | undefined) {
-  let seasonsWithEvents = await getSeasonsWithEvents()
-  if (seriesData) {
-    seasonsWithEvents = seasonsWithEvents.filter(
-      s =>
-        !seriesData.seasons.find(
-          (season, i) =>
-            season.name === s.season.split('_')[1] &&
-            i !== seasonsWithEvents.length - 1
-        )
-    )
-  }
+async function getAllEventResults() {
+  const seasonsWithEvents = await getSeasonsWithEvents()
   const allEventResults = []
   const data = await Promise.all(
     seasonsWithEvents.map(({ season, events }) => {
