@@ -4,5 +4,5 @@ export const db = database
 
 export async function clearStorage() {
   const storage = useStorage('data')
-  await storage.clear()
+  await storage.removeItem('nitro:handlers:_:seriesdata.json')
 }
