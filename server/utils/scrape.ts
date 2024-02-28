@@ -8,10 +8,9 @@ import {
 } from '~/server/db/schema'
 
 export async function getSeriesData(seriesName: string) {
-  let seriesData = await db.query.series.findFirst({
-    where: (series, { like }) => like(series.name, seriesName),
-    with: { seasons: { with: { events: { with: { results: true } } } } },
-  })
+  const allSeriesData = await $fetch(`/api/series/`)
+
+  let seriesData = allSeriesData.find(series => series.name === seriesName)
   if (!seriesData) {
     const id = crypto.randomUUID()
     await db.insert(tableSeries).values({
