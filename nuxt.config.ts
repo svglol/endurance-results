@@ -6,9 +6,9 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@vue-macros/nuxt',
     '@vueuse/nuxt',
-    '@nuxtjs/google-fonts',
     '@vite-pwa/nuxt',
     '@nuxtjs/seo',
+    '@nuxt/fonts',
   ],
   devtools: { enabled: true },
   experimental: {
@@ -31,11 +31,6 @@ export default defineNuxtConfig({
     database: {
       url: process.env.DATABASE_URL,
       token: process.env.DATABASE_AUTH_TOKEN,
-    },
-  },
-  googleFonts: {
-    families: {
-      Inter: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
   },
   pwa: {
@@ -116,6 +111,16 @@ export default defineNuxtConfig({
       data: {
         driver: 'cloudflare-kv-binding',
         binding: 'STORAGE',
+      },
+    },
+    devStorage: {
+      cache: {
+        driver: 'fs',
+        base: './.data/',
+      },
+      data: {
+        driver: 'fs',
+        base: './.data/',
       },
     },
   },

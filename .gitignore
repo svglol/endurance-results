@@ -5,6 +5,7 @@
 .cache
 .vercel
 dist
+.data
 
 # Node dependencies
 node_modules
