@@ -94,6 +94,7 @@ export default defineNuxtConfig({
     },
   },
   ogImage: {
+    fonts: ['Noto+Sans:400', 'Noto+Sans:700'],
     runtimeCacheStorage: {
       driver: 'cloudflareKVBinding',
       binding: 'OG_IMAGE_CACHE',

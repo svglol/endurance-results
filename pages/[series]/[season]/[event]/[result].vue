@@ -80,6 +80,9 @@
         sort-mode="manual"
         :rows="filteredItems"
         :columns="columnsTable"
+        :ui="{
+          tbody: 'font-mono',
+        }"
         sort-asc-icon="i-heroicons-arrow-up-20-solid"
         sort-desc-icon="i-heroicons-arrow-down-20-solid"
         :sort-button="{
