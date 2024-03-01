@@ -43,7 +43,7 @@
     "@vite-pwa/nuxt": "0.5.0",
     "@vue-macros/nuxt": "1.9.21",
     "@vue/test-utils": "2.4.4",
-    "@vueuse/core": "10.8.0",
+    "@vueuse/core": "10.9.0",
     "@vueuse/nuxt": "10.8.0",
     "drizzle-kit": "0.20.14",
     "drizzle-orm": "0.29.4",
