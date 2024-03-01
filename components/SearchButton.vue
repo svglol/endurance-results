@@ -16,7 +16,11 @@
         fuseOptions: { keys: ['title', 'category'] },
       }"
       selected-icon=""
-      @update:model-value="onSelect" />
+      @update:model-value="onSelect">
+      <template #empty-state>
+        <div />
+      </template>
+    </UCommandPalette>
   </UModal>
 </template>
 
