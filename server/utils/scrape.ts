@@ -5,7 +5,7 @@ import {
   event as tableEvent,
   result as tableResult,
   season as tableSeason,
-} from '~/server/db/schema'
+} from '~/server/database/schema'
 
 export async function getSeriesData(seriesName: string) {
   const allSeriesData = await $fetch(`/api/series/`)
@@ -13,11 +13,11 @@ export async function getSeriesData(seriesName: string) {
   let seriesData = allSeriesData.find(series => series.name === seriesName)
   if (!seriesData) {
     const id = crypto.randomUUID()
-    await db.insert(tableSeries).values({
+    await useDB().insert(tableSeries).values({
       id,
       name: seriesName,
     })
-    seriesData = await db.query.series.findFirst({
+    seriesData = await useDB().query.series.findFirst({
       where: (series, { like }) => like(series.name, seriesName),
       with: { seasons: { with: { events: { with: { results: true } } } } },
     })
@@ -63,7 +63,7 @@ export async function insertData(
   seriesData: SeriesData | undefined
 ) {
   for (const { season, event, results } of data) {
-    await db.transaction(async tx => {
+    await useDB().transaction(async tx => {
       // check if season exists
       let seasonId = ''
       if (seriesData?.seasons.filter(s => s.name === season).length === 0) {

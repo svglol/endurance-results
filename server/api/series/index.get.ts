@@ -1,6 +1,6 @@
 export default defineCachedEventHandler(
   () => {
-    return db.query.series.findMany({
+    return useDB().query.series.findMany({
       with: {
         seasons: {
           with: {

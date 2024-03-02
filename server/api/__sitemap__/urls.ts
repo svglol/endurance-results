@@ -2,7 +2,7 @@ import slugify from 'slugify'
 
 export default defineCachedEventHandler(
   async () => {
-    const series = await db.query.series.findMany({
+    const series = await useDB().query.series.findMany({
       with: {
         seasons: {
           with: {

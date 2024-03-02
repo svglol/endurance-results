@@ -8,7 +8,7 @@ export default defineCachedEventHandler(
     if (!seriesParam || !seasonParam || !eventParam || !resultParam) {
       return new Error('Invalid parameters')
     }
-    const test = await db.query.series.findFirst({
+    const test = await useDB().query.series.findFirst({
       where: (series, { like }) => like(series.name, seriesParam),
       with: {
         seasons: {

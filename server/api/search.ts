@@ -4,7 +4,7 @@ export default defineCachedEventHandler<{ query: { q: string } }>(
   async event => {
     const query = getQuery(event)
 
-    const series = await db.query.series.findMany({
+    const series = await useDB().query.series.findMany({
       with: {
         seasons: {
           with: {

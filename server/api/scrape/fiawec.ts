@@ -125,7 +125,8 @@ function parseEventResults(
   for (const t of td) {
     if (
       (t.text.includes('FIA WEC') && !t.text.includes('ROOKIE TEST')) ||
-      t.text.includes('24 HEURES DU MANS')
+      t.text.includes('24 HEURES DU MANS') ||
+      t.text.includes('PROLOGUE')
     ) {
       const links = t.getElementsByTagName('a').map(a => a.attributes.href)
       for (const link of links) {
