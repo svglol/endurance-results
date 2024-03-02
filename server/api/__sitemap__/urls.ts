@@ -26,7 +26,7 @@ export default defineCachedEventHandler(
     )
   },
   {
-    maxAge: 60 * 60,
+    maxAge: 60,
   }
 )
 function createSlug(label: string) {
