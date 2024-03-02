@@ -6,14 +6,13 @@ export async function getSeriesData(seriesName: string) {
 
   let seriesData = allSeriesData.find(series => series.name === seriesName)
   if (!seriesData) {
-    await useDB().insert(tables.series).values({
-      name: seriesName,
-    })
-
-    seriesData = await useDB().query.series.findFirst({
-      where: (series, { eq }) => eq(series.name, seriesName),
-      with: { seasons: { with: { events: { with: { results: true } } } } },
-    })
+    const insertedSeries = await useDB()
+      .insert(tables.series)
+      .values({
+        name: seriesName,
+      })
+      .returning()
+    seriesData = { ...insertedSeries[0], seasons: [] }
   }
   return seriesData
 }
