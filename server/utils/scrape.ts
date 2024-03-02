@@ -1,24 +1,17 @@
 import type { EventHandler, EventHandlerRequest } from 'h3'
 import { Receiver } from '@upstash/qstash'
-import {
-  series as tableSeries,
-  event as tableEvent,
-  result as tableResult,
-  season as tableSeason,
-} from '~/server/database/schema'
 
 export async function getSeriesData(seriesName: string) {
   const allSeriesData = await $fetch(`/api/series/`)
 
   let seriesData = allSeriesData.find(series => series.name === seriesName)
   if (!seriesData) {
-    const id = crypto.randomUUID()
-    await useDB().insert(tableSeries).values({
-      id,
+    await useDB().insert(tables.series).values({
       name: seriesName,
     })
+
     seriesData = await useDB().query.series.findFirst({
-      where: (series, { like }) => like(series.name, seriesName),
+      where: (series, { eq }) => eq(series.name, seriesName),
       with: { seasons: { with: { events: { with: { results: true } } } } },
     })
   }
@@ -65,49 +58,42 @@ export async function insertData(
   for (const { season, event, results } of data) {
     await useDB().transaction(async tx => {
       // check if season exists
-      let seasonId = ''
+      let seasonId: number
       if (seriesData?.seasons.filter(s => s.name === season).length === 0) {
-        seasonId = crypto.randomUUID()
-        await tx.insert(tableSeason).values({
-          id: seasonId,
-          name: season,
-          seriesId: seriesData.id,
-        })
-        seriesData.seasons.push({
-          id: seasonId,
-          name: season,
-          seriesId: seriesData.id,
-          events: [],
-        })
+        const insertedSeason = await tx
+          .insert(tables.season)
+          .values({
+            name: season,
+            seriesId: seriesData.id,
+          })
+          .returning()
+        seriesData.seasons.push({ ...insertedSeason[0], events: [] })
+        seasonId = insertedSeason[0].id
       } else {
-        seasonId = seriesData?.seasons.filter(s => s.name === season)[0]
-          .id as string
+        seasonId = seriesData?.seasons.filter(s => s.name === season)[0].id
       }
       // check if event exists
-      let eventId = ''
+      let eventId: number
       if (
         seriesData?.seasons
           .filter(s => s.name === season)[0]
           .events.filter(e => e.name === event).length === 0
       ) {
-        eventId = crypto.randomUUID()
-        await tx.insert(tableEvent).values({
-          id: eventId,
-          name: event,
-          seasonId,
-        })
-        seriesData.seasons
-          .filter(s => s.name === season)[0]
-          .events.push({
-            id: eventId,
+        const insertedEvent = await tx
+          .insert(tables.event)
+          .values({
             name: event,
             seasonId,
-            results: [],
           })
+          .returning()
+        seriesData.seasons
+          .filter(s => s.name === season)[0]
+          .events.push({ ...insertedEvent[0], results: [] })
+        eventId = insertedEvent[0].id
       } else {
         eventId = seriesData?.seasons
           .filter(s => s.name === season)[0]
-          .events.filter(e => e.name === event)[0].id as string
+          .events.filter(e => e.name === event)[0].id
       }
       // check if result exists
       for (const result of results) {
@@ -118,23 +104,20 @@ export async function insertData(
               .events.filter(e => e.name === event)[0]
               .results.filter(r => r.name === result.result).length === 0
           ) {
-            const resultId = crypto.randomUUID()
-            await tx.insert(tableResult).values({
-              id: resultId,
-              name: result.result,
-              value: result.data,
-              url: result.url,
-              eventId,
-            })
-            seriesData.seasons
-              .filter(s => s.name === season)[0]
-              .events.filter(e => e.name === event)[0]
-              .results.push({
-                id: resultId,
+            const insertedResult = await tx
+              .insert(tables.result)
+              .values({
                 name: result.result,
                 value: result.data,
                 url: result.url,
                 eventId,
+              })
+              .returning()
+            seriesData.seasons
+              .filter(s => s.name === season)[0]
+              .events.filter(e => e.name === event)[0]
+              .results.push({
+                ...insertedResult[0],
               })
           }
         }

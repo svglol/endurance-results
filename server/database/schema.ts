@@ -1,10 +1,24 @@
 import { relations } from 'drizzle-orm'
-import { text, sqliteTable, blob, index } from 'drizzle-orm/sqlite-core'
+import {
+  text,
+  sqliteTable,
+  blob,
+  index,
+  integer,
+} from 'drizzle-orm/sqlite-core'
 
-export const series = sqliteTable('series', {
-  id: text('id').primaryKey().unique(),
-  name: text('name').notNull(),
-})
+export const series = sqliteTable(
+  'series',
+  {
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+    name: text('name').notNull(),
+  },
+  table => {
+    return {
+      nameIdx: index('series_name_idx').on(table.name),
+    }
+  }
+)
 
 export const seriesRelations = relations(series, ({ many }) => ({
   seasons: many(season),
@@ -13,9 +27,11 @@ export const seriesRelations = relations(series, ({ many }) => ({
 export const season = sqliteTable(
   'seasons',
   {
-    id: text('id').primaryKey().unique(),
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
-    seriesId: text('series_id').references(() => series.id),
+    seriesId: integer('series_id').references(() => series.id, {
+      onDelete: 'cascade',
+    }),
   },
   table => {
     return {
@@ -36,9 +52,11 @@ export const seasonRelations = relations(season, ({ many, one }) => ({
 export const event = sqliteTable(
   'events',
   {
-    id: text('id').primaryKey().unique(),
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
-    seasonId: text('season_id').references(() => season.id),
+    seasonId: integer('season_id').references(() => season.id, {
+      onDelete: 'cascade',
+    }),
   },
   table => {
     return {
@@ -59,10 +77,12 @@ export const eventRelations = relations(event, ({ many, one }) => ({
 export const result = sqliteTable(
   'results',
   {
-    id: text('id').primaryKey().unique(),
+    id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
     url: text('url').notNull(),
     name: text('name').notNull(),
-    eventId: text('event_id').references(() => event.id),
+    eventId: integer('event_id').references(() => event.id, {
+      onDelete: 'cascade',
+    }),
     value: blob('value').notNull(),
   },
   table => {

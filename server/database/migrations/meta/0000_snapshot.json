@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "64867e29-a7cc-4e6c-bd98-ae32b08b154c",
+  "id": "837e5950-94eb-4cf9-a004-23cd4b8c39f6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "events": {
@@ -9,10 +9,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "name": {
           "name": "name",
@@ -23,20 +23,13 @@
         },
         "season_id": {
           "name": "season_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         }
       },
       "indexes": {
-        "events_id_unique": {
-          "name": "events_id_unique",
-          "columns": [
-            "id"
-          ],
-          "isUnique": true
-        },
         "events_season_id_idx": {
           "name": "events_season_id_idx",
           "columns": [
@@ -63,7 +56,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -75,10 +68,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "url": {
           "name": "url",
@@ -96,7 +89,7 @@
         },
         "event_id": {
           "name": "event_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -110,13 +103,6 @@
         }
       },
       "indexes": {
-        "results_id_unique": {
-          "name": "results_id_unique",
-          "columns": [
-            "id"
-          ],
-          "isUnique": true
-        },
         "results_event_id_idx": {
           "name": "results_event_id_idx",
           "columns": [
@@ -143,7 +129,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -155,10 +141,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "name": {
           "name": "name",
@@ -169,20 +155,13 @@
         },
         "series_id": {
           "name": "series_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         }
       },
       "indexes": {
-        "seasons_id_unique": {
-          "name": "seasons_id_unique",
-          "columns": [
-            "id"
-          ],
-          "isUnique": true
-        },
         "seasons_series_id_idx": {
           "name": "seasons_series_id_idx",
           "columns": [
@@ -209,7 +188,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -221,10 +200,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "name": {
           "name": "name",
@@ -235,12 +214,12 @@
         }
       },
       "indexes": {
-        "series_id_unique": {
-          "name": "series_id_unique",
+        "series_name_idx": {
+          "name": "series_name_idx",
           "columns": [
-            "id"
+            "name"
           ],
-          "isUnique": true
+          "isUnique": false
         }
       },
       "foreignKeys": {},
