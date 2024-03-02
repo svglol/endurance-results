@@ -12,14 +12,14 @@ export default defineNitroPlugin(async () => {
     await migrateLibSQL(
       useDB() as LibSQLDatabase<typeof import('~/server/database/schema')>,
       {
-        migrationsFolder: 'server/database/migrations',
+        migrationsFolder: './server/database/migrations',
       }
     )
   } else if (process.env.DB) {
     await migrateD1(
       useDB() as DrizzleD1Database<typeof import('~/server/database/schema')>,
       {
-        migrationsFolder: 'server/database/migrations',
+        migrationsFolder: './server/database/migrations',
       }
     )
   } else if (process.dev) {
@@ -28,7 +28,7 @@ export default defineNitroPlugin(async () => {
         typeof import('~/server/database/schema')
       >,
       {
-        migrationsFolder: 'server/database/migrations',
+        migrationsFolder: './server/database/migrations',
       }
     )
   }
