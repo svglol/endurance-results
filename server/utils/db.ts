@@ -10,9 +10,9 @@ import * as schema from '~/server/database/schema'
 export * as tables from '~/server/database/schema'
 
 let _db:
-  | DrizzleD1Database<typeof import('~/server/database/schema')>
-  | BetterSQLite3Database<typeof import('~/server/database/schema')>
-  | LibSQLDatabase<typeof import('~/server/database/schema')>
+  | DrizzleD1Database<typeof schema>
+  | BetterSQLite3Database<typeof schema>
+  | LibSQLDatabase<typeof schema>
   | null = null
 
 export const useDB = () => {
