@@ -54,69 +54,71 @@ export async function insertData(
   data: InsertData[],
   seriesData: SeriesData | undefined
 ) {
-  for (const { season, event, results } of data) {
-    // check if season exists
-    let seasonId: number
-    if (seriesData?.seasons.filter(s => s.name === season).length === 0) {
-      const insertedSeason = await useDB()
-        .insert(tables.season)
-        .values({
-          name: season,
-          seriesId: seriesData.id,
-        })
-        .returning()
-      seriesData.seasons.push({ ...insertedSeason[0], events: [] })
-      seasonId = insertedSeason[0].id
-    } else {
-      seasonId = seriesData?.seasons.filter(s => s.name === season)[0].id
-    }
-    // check if event exists
-    let eventId: number
-    if (
+  // create all missing seasons
+  const seasonsNotExist = data
+    .filter(({ season }) => {
+      return seriesData?.seasons.filter(s => s.name === season).length === 0
+    })
+    .map(({ season }) => {
+      return {
+        name: season,
+        seriesId: seriesData?.id,
+      }
+    })
+  if (seasonsNotExist.length > 0) {
+    const insertedSeasons = await useDB()
+      .insert(tables.season)
+      .values(seasonsNotExist)
+      .returning()
+
+    insertedSeasons.forEach(season => {
+      seriesData?.seasons.push({ ...season, events: [] })
+    })
+  }
+
+  // create all missing events
+  const eventsNotExist = data
+    .filter(({ season, event }) => {
+      return (
+        seriesData?.seasons
+          .filter(s => s.name === season)[0]
+          .events.filter(e => e.name === event).length === 0
+      )
+    })
+    .map(({ season, event }) => {
+      return {
+        name: event,
+        seasonId: seriesData?.seasons.filter(s => s.name === season)[0].id,
+      }
+    })
+  if (eventsNotExist.length > 0) {
+    const insertedEvents = await useDB()
+      .insert(tables.event)
+      .values(eventsNotExist)
+      .returning()
+
+    insertedEvents.forEach(event => {
       seriesData?.seasons
-        .filter(s => s.name === season)[0]
-        .events.filter(e => e.name === event).length === 0
-    ) {
-      const insertedEvent = await useDB()
-        .insert(tables.event)
-        .values({
-          name: event,
-          seasonId,
-        })
-        .returning()
-      seriesData.seasons
-        .filter(s => s.name === season)[0]
-        .events.push({ ...insertedEvent[0], results: [] })
-      eventId = insertedEvent[0].id
-    } else {
-      eventId = seriesData?.seasons
-        .filter(s => s.name === season)[0]
-        .events.filter(e => e.name === event)[0].id
-    }
-    // create a array of results that need to be inserted
-    const resultsToInsert = results
-      .filter(result => {
-        if (
-          seriesData?.seasons
-            .filter(s => s.name === season)[0]
-            .events.filter(e => e.name === event)[0]
-            .results.filter(r => r.name === result.result).length === 0 &&
-          result.data !== ''
-        ) {
-          return true
-        }
-        return false
-      })
-      .map(result => {
-        return {
-          name: result.result,
-          url: result.url,
-          value: result.data,
-          eventId,
-        }
-      })
-    if (resultsToInsert.length > 0)
-      await useDB().insert(tables.result).values(resultsToInsert)
+        .filter(s => s.id === event.seasonId)[0]
+        .events.push({ ...event, results: [] })
+    })
+  }
+
+  // create all results
+  const resultsToInsert = data.flatMap(({ season, event, results }) => {
+    return results.map(result => {
+      return {
+        name: result.result,
+        url: result.url,
+        value: result.data,
+        eventId: seriesData?.seasons
+          .filter(s => s.name === season)[0]
+          .events.filter(e => e.name === event)[0].id,
+      }
+    })
+  })
+  if (resultsToInsert.length > 0) {
+    await useDB().insert(tables.result).values(resultsToInsert)
   }
 }
 
