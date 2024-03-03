@@ -1,9 +1,8 @@
 import { drizzle as drizzleD1, DrizzleD1Database } from 'drizzle-orm/d1'
 import { createClient as createLibSQLClient } from '@libsql/client/http'
+import { createClient as createLibSQLClientLocal } from '@libsql/client'
 import { drizzle as drizzleLibSQL, LibSQLDatabase } from 'drizzle-orm/libsql'
-import { drizzle, type BetterSQLite3Database } from 'drizzle-orm/better-sqlite3'
 // @ts-ignore
-import Database from 'better-sqlite3'
 import { join } from 'pathe'
 import * as schema from '~/server/database/schema'
 
@@ -11,7 +10,6 @@ export * as tables from '~/server/database/schema'
 
 let _db:
   | DrizzleD1Database<typeof schema>
-  | BetterSQLite3Database<typeof schema>
   | LibSQLDatabase<typeof schema>
   | null = null
 
@@ -31,8 +29,13 @@ export const useDB = () => {
       _db = drizzleD1(process.env.DB, { schema })
     } else if (process.dev) {
       // local sqlite in development
-      const sqlite = new Database(join(process.cwd(), '.data/db.sqlite'))
-      _db = drizzle(sqlite, { schema })
+      _db = drizzleLibSQL(
+        createLibSQLClientLocal({
+          url: 'file:' + join(process.cwd(), '.data/db.sqlite'),
+          authToken: '...',
+        }),
+        { schema }
+      )
     } else {
       throw new Error('No database configured for production')
     }
