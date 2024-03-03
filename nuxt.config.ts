@@ -27,6 +27,12 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: '~/assets/global.css',
   },
+  runtimeConfig: {
+    database: {
+      url: process.env.DATABASE_URL,
+      token: process.env.DATABASE_AUTH_TOKEN,
+    },
+  },
   pwa: {
     strategies: 'generateSW',
     registerType: 'autoUpdate',
@@ -98,9 +104,6 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    experimental: {
-      tasks: true,
-    },
     storage: {
       cache: {
         driver: 'cloudflareKVBinding',
