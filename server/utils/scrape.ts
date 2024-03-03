@@ -93,33 +93,30 @@ export async function insertData(
         .filter(s => s.name === season)[0]
         .events.filter(e => e.name === event)[0].id
     }
-    // check if result exists
-    for (const result of results) {
-      if (result.data !== '') {
+    // create a array of results that need to be inserted
+    const resultsToInsert = results
+      .filter(result => {
         if (
           seriesData?.seasons
             .filter(s => s.name === season)[0]
             .events.filter(e => e.name === event)[0]
-            .results.filter(r => r.name === result.result).length === 0
+            .results.filter(r => r.name === result.result).length === 0 &&
+          result.data !== ''
         ) {
-          const insertedResult = await useDB()
-            .insert(tables.result)
-            .values({
-              name: result.result,
-              value: result.data,
-              url: result.url,
-              eventId,
-            })
-            .returning()
-          seriesData.seasons
-            .filter(s => s.name === season)[0]
-            .events.filter(e => e.name === event)[0]
-            .results.push({
-              ...insertedResult[0],
-            })
+          return true
         }
-      }
-    }
+        return false
+      })
+      .map(result => {
+        return {
+          name: result.result,
+          url: result.url,
+          value: result.data,
+          eventId,
+        }
+      })
+    if (resultsToInsert.length > 0)
+      await useDB().insert(tables.result).values(resultsToInsert)
   }
 }
 
