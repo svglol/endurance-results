@@ -1,11 +1,10 @@
 import { type InferSelectModel } from 'drizzle-orm'
-import type { event, result, season, series } from '~/server/db/schema'
 
 declare global {
-  type Series = InferSelectModel<typeof series>
-  type Season = InferSelectModel<typeof season>
-  type Event = InferSelectModel<typeof event>
-  type Result = InferSelectModel<typeof result>
+  type Series = InferSelectModel<typeof tables.series>
+  type Season = InferSelectModel<typeof tables.season>
+  type Event = InferSelectModel<typeof tables.event>
+  type Result = InferSelectModel<typeof tables.result>
 
   type ResultWithoutValue = Omit<Result, 'value', 'eventId'>
 
