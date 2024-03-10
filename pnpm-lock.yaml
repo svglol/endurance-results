@@ -48,8 +48,8 @@ devDependencies:
     specifier: ^2.3.0
     version: 2.3.0
   '@vite-pwa/nuxt':
-    specifier: 0.5.0
-    version: 0.5.0(rollup@2.79.1)(vite@5.1.5)(workbox-build@7.0.0)(workbox-window@7.0.0)
+    specifier: 0.6.0
+    version: 0.6.0(rollup@2.79.1)(vite@5.1.5)(workbox-build@7.0.0)(workbox-window@7.0.0)
   '@vue-macros/nuxt':
     specifier: 1.9.21
     version: 1.9.21(@vue-macros/reactivity-transform@0.4.3)(@vueuse/core@10.9.0)(esbuild@0.19.12)(nuxt@3.10.3)(rollup@2.79.1)(typescript@5.3.3)(vite@5.1.5)(vue@3.4.21)(webpack@5.90.3)
@@ -5125,15 +5125,19 @@ packages:
       - supports-color
     dev: true
 
-  /@vite-pwa/nuxt@0.5.0(rollup@2.79.1)(vite@5.1.5)(workbox-build@7.0.0)(workbox-window@7.0.0):
-    resolution: {integrity: sha512-5Si0Qpj9FGYmgrX52HJtY1OZKNDXJVmx17yULk0Karb7+6GKXhRcWP3DnFTEG7zkctXuzBli5sXjQaEEbEgy6w==}
+  /@vite-pwa/nuxt@0.6.0(rollup@2.79.1)(vite@5.1.5)(workbox-build@7.0.0)(workbox-window@7.0.0):
+    resolution: {integrity: sha512-oW2fQ18yC7p81F4NeZe7y14dqzWR0IBljoEp5Ns2hHh44EyBsPP8kdFYqDOLJsbVGjqZdSmWdxESgLfT3SGpLA==}
+    peerDependencies:
+      '@vite-pwa/assets-generator': ^0.2.4
+    peerDependenciesMeta:
+      '@vite-pwa/assets-generator':
+        optional: true
     dependencies:
       '@nuxt/kit': 3.10.3(rollup@2.79.1)
       pathe: 1.1.2
       ufo: 1.4.0
       vite-plugin-pwa: 0.19.2(vite@5.1.5)(workbox-build@7.0.0)(workbox-window@7.0.0)
     transitivePeerDependencies:
-      - '@vite-pwa/assets-generator'
       - rollup
       - supports-color
       - vite
