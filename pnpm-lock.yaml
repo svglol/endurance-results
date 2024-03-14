@@ -12,8 +12,8 @@ devDependencies:
     specifier: 19.0.3
     version: 19.0.3
   '@libsql/client':
-    specifier: 0.5.3
-    version: 0.5.3
+    specifier: 0.5.5
+    version: 0.5.5
   '@nuxt/devtools':
     specifier: 1.0.8
     version: 1.0.8(nuxt@3.10.3)(rollup@2.79.1)(vite@5.1.5)
@@ -67,7 +67,7 @@ devDependencies:
     version: 0.20.14
   drizzle-orm:
     specifier: 0.30.1
-    version: 0.30.1(@libsql/client@0.5.3)
+    version: 0.30.1(@libsql/client@0.5.5)
   eslint:
     specifier: 8.57.0
     version: 8.57.0
@@ -94,7 +94,7 @@ devDependencies:
     version: 6.1.12
   nuxt:
     specifier: 3.10.3
-    version: 3.10.3(@libsql/client@0.5.3)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+    version: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
   postcss-html:
     specifier: 1.6.0
     version: 1.6.0
@@ -2762,35 +2762,35 @@ packages:
       '@lezer/common': 1.2.1
     dev: true
 
-  /@libsql/client@0.5.3:
-    resolution: {integrity: sha512-GsOTv/Yikw8I9ZBqpxwfcDM2GDFtyZfJg7MYgWqVnNXtsqCa+tabSuRVKe34UaG2FjcOFJr9buB4vbl55geXXw==}
+  /@libsql/client@0.5.5:
+    resolution: {integrity: sha512-fEFtFWKzf4GGlrndzAAPmDwRRXYmHADbDis9LS+63kn0ne2FQIjX5v55CdxHXYpcUJQCEmVmZkvo5/PtcsgVLA==}
     dependencies:
-      '@libsql/core': 0.5.3
+      '@libsql/core': 0.5.6
       '@libsql/hrana-client': 0.5.6
       js-base64: 3.7.7
-      libsql: 0.3.8
+      libsql: 0.3.10
     transitivePeerDependencies:
       - bufferutil
       - encoding
       - utf-8-validate
     dev: true
 
-  /@libsql/core@0.5.3:
-    resolution: {integrity: sha512-vccnRnLIeru4hacfowXDZZRxYyFWN8Z6CSs+951rH7w9JOMzwmetn5IYsXw5VcOIf0P0aLa86Uhvl1MF8jM6pA==}
+  /@libsql/core@0.5.6:
+    resolution: {integrity: sha512-3vicUAydq6jPth410n4AsHHm1n2psTwvkSf94nfJlSXutGSZsl0updn2N/mJBgqUHkbuFoWZtlMifF0SwBj1xQ==}
     dependencies:
       js-base64: 3.7.7
     dev: true
 
-  /@libsql/darwin-arm64@0.3.8:
-    resolution: {integrity: sha512-uh9dfDsmx0NfBjJbFm8APPD8E5s18mxmmmuH4IdSTl/xdv9URAeYo8zv9s2SHgM62QbUUcokLDzLgFfOGSsFBA==}
+  /@libsql/darwin-arm64@0.3.10:
+    resolution: {integrity: sha512-RaexEFfPAFogd6dJlqkpCkTxdr6K14Z0286lodIJ8Ny77mWuWyBkWKxf70OYWXXAMxMJFUW+6al1F3/Osf/pTg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@libsql/darwin-x64@0.3.8:
-    resolution: {integrity: sha512-+5CSFTMs86thuUJW2emzCqrZunueR4ilUV9J1HeZgUtSiQg32/z5GdCR0027JgALqB++yhFGY4WK4SNAPWdKaA==}
+  /@libsql/darwin-x64@0.3.10:
+    resolution: {integrity: sha512-SNVN6n4qNUdMW1fJMFmx4qn4n5RnXsxjFbczpkzG/V7m/5VeTFt1chhGcrahTHCr3+K6eRJWJUEQHRGqjBwPkw==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
@@ -2829,40 +2829,40 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@libsql/linux-arm64-gnu@0.3.8:
-    resolution: {integrity: sha512-s9blvMx2tA0HGnTHUhEtZZoBLoZqaTxVyjM4qFrxJO84GP902N/DXtbxO2ib6Jbs5rom+78DkpHmi7PzBDLCZA==}
+  /@libsql/linux-arm64-gnu@0.3.10:
+    resolution: {integrity: sha512-2uXpi9d8qtyIOr7pyG4a88j6YXgemyIHEs2Wbp+PPletlCIPsFS+E7IQHbz8VwTohchOzcokGUm1Bc5QC+A7wg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@libsql/linux-arm64-musl@0.3.8:
-    resolution: {integrity: sha512-Gw+g5GbeAXdONzpmKVvvdIk/8cCjn0MeN8KNm59xbuwWnkA0NCz94UMD725xOoyl3z+olBxhAdE5yEznLSTcag==}
+  /@libsql/linux-arm64-musl@0.3.10:
+    resolution: {integrity: sha512-72SN1FUavLvzHddCS861ynSpQndcW5oLGKA3U8CyMfgIZIwJAPc7+48Uj1plW00htXBx4GBpcntFp68KKIx3YQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@libsql/linux-x64-gnu@0.3.8:
-    resolution: {integrity: sha512-XRpzXlbM0ZvPVB8/bhun/4dhRUt4PBo1zTz0njaWo/EQoZNGQkps1IZv7v3wR40Kcug4qvmuXTCGuYPQN4QI7w==}
+  /@libsql/linux-x64-gnu@0.3.10:
+    resolution: {integrity: sha512-hXyNqVRi7ONuyWZ1SX6setxL0QaQ7InyS3bHLupsi9s7NpOGD5vcpTaYicJOqmIIm+6kt8vJfmo7ZxlarIHy7Q==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@libsql/linux-x64-musl@0.3.8:
-    resolution: {integrity: sha512-gjqjqXpSBj3aB7Q2D0zgoYlquJr8WkPXaByjXE4XYNzcRRg6o+q3V3Uv9s6yhKBoLiBsltUETFJLCoQNzUv9kA==}
+  /@libsql/linux-x64-musl@0.3.10:
+    resolution: {integrity: sha512-kNmIRxomVwt9S+cLyYS497F/3gXFF4r8wW12YSBQgxG75JYft07AHVd8J7HINg+oqRkLzT0s+mVX5dM6nk68EQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@libsql/win32-x64-msvc@0.3.8:
-    resolution: {integrity: sha512-KbqqgbL2iBciVFZSJ//36U0Fr6P6AAcLpJPqVckRdNOC43whZlKNglmjtzQDOq3+UVieC8OkLUPEDShRIcSDZA==}
+  /@libsql/win32-x64-msvc@0.3.10:
+    resolution: {integrity: sha512-c/6rjdtGULKrJkLgfLobFefObfOtxjXGmCfPxv6pr0epPCeUEssfDbDIeEH9fQUgzogIMWEHwT8so52UJ/iT1Q==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -3031,7 +3031,7 @@ packages:
       '@nuxt/kit': 3.10.3(rollup@2.79.1)
       '@nuxt/schema': 3.10.3(rollup@2.79.1)
       execa: 7.2.0
-      nuxt: 3.10.3(@libsql/client@0.5.3)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       vite: 5.1.5(@types/node@20.11.25)
     transitivePeerDependencies:
       - rollup
@@ -3130,7 +3130,7 @@ packages:
       launch-editor: 2.6.1
       local-pkg: 0.5.0
       magicast: 0.3.3
-      nuxt: 3.10.3(@libsql/client@0.5.3)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       nypm: 0.3.8
       ohash: 1.1.3
       pacote: 17.0.6
@@ -5510,7 +5510,7 @@ packages:
       '@nuxt/kit': 3.10.3(rollup@2.79.1)
       '@vue-macros/common': 1.10.1(rollup@2.79.1)(vue@3.4.21)
       '@vue-macros/volar': 0.18.11(@vue-macros/reactivity-transform@0.4.3)(rollup@2.79.1)(typescript@5.4.2)(vue@3.4.21)
-      nuxt: 3.10.3(@libsql/client@0.5.3)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       unplugin-vue-macros: 2.7.10(@vueuse/core@10.9.0)(esbuild@0.19.12)(rollup@2.79.1)(typescript@5.4.2)(vite@5.1.5)(vue@3.4.21)(webpack@5.90.3)
     transitivePeerDependencies:
       - '@vue-macros/reactivity-transform'
@@ -5920,7 +5920,7 @@ packages:
       '@vueuse/core': 10.9.0(vue@3.4.21)
       '@vueuse/metadata': 10.9.0
       local-pkg: 0.5.0
-      nuxt: 3.10.3(@libsql/client@0.5.3)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       vue-demi: 0.14.7(vue@3.4.21)
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -7426,7 +7426,7 @@ packages:
     engines: {node: '>= 12'}
     dev: true
 
-  /db0@0.1.4(@libsql/client@0.5.3)(drizzle-orm@0.30.1):
+  /db0@0.1.4(@libsql/client@0.5.5)(drizzle-orm@0.30.1):
     resolution: {integrity: sha512-Ft6eCwONYxlwLjBXSJxw0t0RYtA5gW9mq8JfBXn9TtC0nDPlqePAhpv9v4g9aONBi6JI1OXHTKKkUYGd+BOrCA==}
     peerDependencies:
       '@libsql/client': ^0.5.2
@@ -7440,8 +7440,8 @@ packages:
       drizzle-orm:
         optional: true
     dependencies:
-      '@libsql/client': 0.5.3
-      drizzle-orm: 0.30.1(@libsql/client@0.5.3)
+      '@libsql/client': 0.5.5
+      drizzle-orm: 0.30.1(@libsql/client@0.5.5)
     dev: true
 
   /de-indent@1.0.2:
@@ -7724,7 +7724,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.1(@libsql/client@0.5.3):
+  /drizzle-orm@0.30.1(@libsql/client@0.5.5):
     resolution: {integrity: sha512-5P6CXl4XyWtDDiYOX/jYOJp1HTUmBlXRAwaq+muUOgaSykMEy5sJesCxceMT0oCGvxeWkKfSXo5owLnfKwCIdw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -7798,7 +7798,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@libsql/client': 0.5.3
+      '@libsql/client': 0.5.5
     dev: true
 
   /duplexer@0.1.2:
@@ -10330,21 +10330,21 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /libsql@0.3.8:
-    resolution: {integrity: sha512-tz12gCfDXl6WKwtpxpw6PaZtkecHQQQTHuuj6RLQvEfOB17bPpmo8xdC55S4J6fx6qzmqJbaLZSlA6gYJgUXkg==}
-    cpu: [x64, arm64]
+  /libsql@0.3.10:
+    resolution: {integrity: sha512-/8YMTbwWFPmrDWY+YFK3kYqVPFkMgQre0DGmBaOmjogMdSe+7GHm1/q9AZ61AWkEub/vHmi+bA4tqIzVhKnqzg==}
+    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
     dependencies:
       '@neon-rs/load': 0.0.4
       detect-libc: 2.0.2
     optionalDependencies:
-      '@libsql/darwin-arm64': 0.3.8
-      '@libsql/darwin-x64': 0.3.8
-      '@libsql/linux-arm64-gnu': 0.3.8
-      '@libsql/linux-arm64-musl': 0.3.8
-      '@libsql/linux-x64-gnu': 0.3.8
-      '@libsql/linux-x64-musl': 0.3.8
-      '@libsql/win32-x64-msvc': 0.3.8
+      '@libsql/darwin-arm64': 0.3.10
+      '@libsql/darwin-x64': 0.3.10
+      '@libsql/linux-arm64-gnu': 0.3.10
+      '@libsql/linux-arm64-musl': 0.3.10
+      '@libsql/linux-x64-gnu': 0.3.10
+      '@libsql/linux-x64-musl': 0.3.10
+      '@libsql/win32-x64-msvc': 0.3.10
     dev: true
 
   /lighthouse-logger@2.0.1:
@@ -11011,7 +11011,7 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /nitropack@2.9.3(@libsql/client@0.5.3)(drizzle-orm@0.30.1):
+  /nitropack@2.9.3(@libsql/client@0.5.5)(drizzle-orm@0.30.1):
     resolution: {integrity: sha512-k3wXlhxmTNkkFXnVyRYJ6CCdZmvlqjYJ4oaL8o9uTKIjg7A1udAle+3cVDxUWi2r9owwEysAP2+quNsAujZyTg==}
     engines: {node: ^16.11.0 || >=17.0.0}
     hasBin: true
@@ -11042,7 +11042,7 @@ packages:
       cookie-es: 1.0.0
       croner: 8.0.1
       crossws: 0.2.4
-      db0: 0.1.4(@libsql/client@0.5.3)(drizzle-orm@0.30.1)
+      db0: 0.1.4(@libsql/client@0.5.5)(drizzle-orm@0.30.1)
       defu: 6.1.4
       destr: 2.0.3
       dot-prop: 8.0.2
@@ -11681,7 +11681,7 @@ packages:
       - webpack
     dev: true
 
-  /nuxt@3.10.3(@libsql/client@0.5.3)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5):
+  /nuxt@3.10.3(@libsql/client@0.5.5)(@types/node@20.11.25)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5):
     resolution: {integrity: sha512-NchGNiiz9g/ErJAb462W/lpX2NqcXYb9hugySKWvLXNdrjeAPiJ2/7mhgwUSiZA9MpjuQg3saiEajr1zlRIOCg==}
     engines: {node: ^14.18.0 || >=16.10.0}
     hasBin: true
@@ -11725,7 +11725,7 @@ packages:
       knitwork: 1.0.0
       magic-string: 0.30.8
       mlly: 1.6.1
-      nitropack: 2.9.3(@libsql/client@0.5.3)(drizzle-orm@0.30.1)
+      nitropack: 2.9.3(@libsql/client@0.5.5)(drizzle-orm@0.30.1)
       nuxi: 3.10.1
       nypm: 0.3.8
       ofetch: 1.3.3
