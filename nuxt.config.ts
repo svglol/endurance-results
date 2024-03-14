@@ -109,17 +109,9 @@ export default defineNuxtConfig({
         driver: 'cloudflareKVBinding',
         binding: 'STORAGE',
       },
-      data: {
-        driver: 'cloudflare-kv-binding',
-        binding: 'STORAGE',
-      },
     },
     devStorage: {
       cache: {
-        driver: 'fs',
-        base: './.data/',
-      },
-      data: {
         driver: 'fs',
         base: './.data/',
       },
