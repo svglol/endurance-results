@@ -12,8 +12,8 @@ devDependencies:
     specifier: 19.1.0
     version: 19.1.0
   '@libsql/client':
-    specifier: 0.5.5
-    version: 0.5.5
+    specifier: 0.5.6
+    version: 0.5.6
   '@nuxt/devtools':
     specifier: 1.0.8
     version: 1.0.8(nuxt@3.10.3)(rollup@2.79.1)(vite@5.1.5)
@@ -67,7 +67,7 @@ devDependencies:
     version: 0.20.14
   drizzle-orm:
     specifier: 0.30.1
-    version: 0.30.1(@libsql/client@0.5.5)
+    version: 0.30.1(@libsql/client@0.5.6)
   eslint:
     specifier: 8.57.0
     version: 8.57.0
@@ -94,7 +94,7 @@ devDependencies:
     version: 6.1.12
   nuxt:
     specifier: 3.10.3
-    version: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+    version: 3.10.3(@libsql/client@0.5.6)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
   postcss-html:
     specifier: 1.6.0
     version: 1.6.0
@@ -2762,8 +2762,8 @@ packages:
       '@lezer/common': 1.2.1
     dev: true
 
-  /@libsql/client@0.5.5:
-    resolution: {integrity: sha512-fEFtFWKzf4GGlrndzAAPmDwRRXYmHADbDis9LS+63kn0ne2FQIjX5v55CdxHXYpcUJQCEmVmZkvo5/PtcsgVLA==}
+  /@libsql/client@0.5.6:
+    resolution: {integrity: sha512-UBjmDoxz75Z2sHdP+ETCROpeLA/77VMesiff8R4UWK1rnaWbh6/YoCLDILMJL3Rh0udQeKxjL8MjXthqohax+g==}
     dependencies:
       '@libsql/core': 0.5.6
       '@libsql/hrana-client': 0.5.6
@@ -3031,7 +3031,7 @@ packages:
       '@nuxt/kit': 3.10.3(rollup@2.79.1)
       '@nuxt/schema': 3.10.3(rollup@2.79.1)
       execa: 7.2.0
-      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.6)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       vite: 5.1.5(@types/node@20.11.26)
     transitivePeerDependencies:
       - rollup
@@ -3130,7 +3130,7 @@ packages:
       launch-editor: 2.6.1
       local-pkg: 0.5.0
       magicast: 0.3.3
-      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.6)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       nypm: 0.3.8
       ohash: 1.1.3
       pacote: 17.0.6
@@ -5522,7 +5522,7 @@ packages:
       '@nuxt/kit': 3.10.3(rollup@2.79.1)
       '@vue-macros/common': 1.10.1(rollup@2.79.1)(vue@3.4.21)
       '@vue-macros/volar': 0.18.11(@vue-macros/reactivity-transform@0.4.3)(rollup@2.79.1)(typescript@5.4.2)(vue@3.4.21)
-      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.6)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       unplugin-vue-macros: 2.7.10(@vueuse/core@10.9.0)(esbuild@0.19.12)(rollup@2.79.1)(typescript@5.4.2)(vite@5.1.5)(vue@3.4.21)(webpack@5.90.3)
     transitivePeerDependencies:
       - '@vue-macros/reactivity-transform'
@@ -5932,7 +5932,7 @@ packages:
       '@vueuse/core': 10.9.0(vue@3.4.21)
       '@vueuse/metadata': 10.9.0
       local-pkg: 0.5.0
-      nuxt: 3.10.3(@libsql/client@0.5.5)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+      nuxt: 3.10.3(@libsql/client@0.5.6)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
       vue-demi: 0.14.7(vue@3.4.21)
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -7422,7 +7422,7 @@ packages:
     engines: {node: '>= 12'}
     dev: true
 
-  /db0@0.1.4(@libsql/client@0.5.5)(drizzle-orm@0.30.1):
+  /db0@0.1.4(@libsql/client@0.5.6)(drizzle-orm@0.30.1):
     resolution: {integrity: sha512-Ft6eCwONYxlwLjBXSJxw0t0RYtA5gW9mq8JfBXn9TtC0nDPlqePAhpv9v4g9aONBi6JI1OXHTKKkUYGd+BOrCA==}
     peerDependencies:
       '@libsql/client': ^0.5.2
@@ -7436,8 +7436,8 @@ packages:
       drizzle-orm:
         optional: true
     dependencies:
-      '@libsql/client': 0.5.5
-      drizzle-orm: 0.30.1(@libsql/client@0.5.5)
+      '@libsql/client': 0.5.6
+      drizzle-orm: 0.30.1(@libsql/client@0.5.6)
     dev: true
 
   /de-indent@1.0.2:
@@ -7720,7 +7720,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.1(@libsql/client@0.5.5):
+  /drizzle-orm@0.30.1(@libsql/client@0.5.6):
     resolution: {integrity: sha512-5P6CXl4XyWtDDiYOX/jYOJp1HTUmBlXRAwaq+muUOgaSykMEy5sJesCxceMT0oCGvxeWkKfSXo5owLnfKwCIdw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -7794,7 +7794,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@libsql/client': 0.5.5
+      '@libsql/client': 0.5.6
     dev: true
 
   /duplexer@0.1.2:
@@ -11007,7 +11007,7 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /nitropack@2.9.3(@libsql/client@0.5.5)(drizzle-orm@0.30.1):
+  /nitropack@2.9.3(@libsql/client@0.5.6)(drizzle-orm@0.30.1):
     resolution: {integrity: sha512-k3wXlhxmTNkkFXnVyRYJ6CCdZmvlqjYJ4oaL8o9uTKIjg7A1udAle+3cVDxUWi2r9owwEysAP2+quNsAujZyTg==}
     engines: {node: ^16.11.0 || >=17.0.0}
     hasBin: true
@@ -11038,7 +11038,7 @@ packages:
       cookie-es: 1.0.0
       croner: 8.0.1
       crossws: 0.2.4
-      db0: 0.1.4(@libsql/client@0.5.5)(drizzle-orm@0.30.1)
+      db0: 0.1.4(@libsql/client@0.5.6)(drizzle-orm@0.30.1)
       defu: 6.1.4
       destr: 2.0.3
       dot-prop: 8.0.2
@@ -11677,7 +11677,7 @@ packages:
       - webpack
     dev: true
 
-  /nuxt@3.10.3(@libsql/client@0.5.5)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5):
+  /nuxt@3.10.3(@libsql/client@0.5.6)(@types/node@20.11.26)(drizzle-orm@0.30.1)(eslint@8.57.0)(rollup@2.79.1)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5):
     resolution: {integrity: sha512-NchGNiiz9g/ErJAb462W/lpX2NqcXYb9hugySKWvLXNdrjeAPiJ2/7mhgwUSiZA9MpjuQg3saiEajr1zlRIOCg==}
     engines: {node: ^14.18.0 || >=16.10.0}
     hasBin: true
@@ -11721,7 +11721,7 @@ packages:
       knitwork: 1.0.0
       magic-string: 0.30.8
       mlly: 1.6.1
-      nitropack: 2.9.3(@libsql/client@0.5.5)(drizzle-orm@0.30.1)
+      nitropack: 2.9.3(@libsql/client@0.5.6)(drizzle-orm@0.30.1)
       nuxi: 3.10.1
       nypm: 0.3.8
       ofetch: 1.3.3
