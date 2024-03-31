@@ -28,7 +28,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.2.1",
     "@commitlint/config-conventional": "19.1.0",
-    "@libsql/client": "0.5.6",
+    "@libsql/client": "0.6.0",
     "@nuxt/devtools": "1.1.5",
     "@nuxt/eslint-config": "0.2.0",
     "@nuxt/fonts": "^0.5.0",
