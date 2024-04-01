@@ -54,7 +54,7 @@
     "eslint-plugin-vue": "9.24.0",
     "happy-dom": "13.10.1",
     "lint-staged": "15.2.2",
-    "node-html-parser": "6.1.12",
+    "node-html-parser": "6.1.13",
     "nuxt": "3.10.3",
     "postcss-html": "1.6.0",
     "prettier": "3.2.5",

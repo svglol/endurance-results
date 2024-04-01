@@ -90,8 +90,8 @@ devDependencies:
     specifier: 15.2.2
     version: 15.2.2
   node-html-parser:
-    specifier: 6.1.12
-    version: 6.1.12
+    specifier: 6.1.13
+    version: 6.1.13
   nuxt:
     specifier: 3.10.3
     version: 3.10.3(@libsql/client@0.6.0)(@types/node@20.11.30)(@unocss/reset@0.58.8)(drizzle-orm@0.30.6)(eslint@8.57.0)(floating-vue@5.2.2)(rollup@2.79.1)(stylelint@16.3.1)(typescript@5.4.3)(unocss@0.58.8)(vite@5.2.6)
@@ -11716,8 +11716,8 @@ packages:
       - supports-color
     dev: true
 
-  /node-html-parser@6.1.12:
-    resolution: {integrity: sha512-/bT/Ncmv+fbMGX96XG9g05vFt43m/+SYKIs9oAemQVYyVcZmDAI2Xq/SbNcpOA35eF0Zk2av3Ksf+Xk8Vt8abA==}
+  /node-html-parser@6.1.13:
+    resolution: {integrity: sha512-qIsTMOY4C/dAa5Q5vsobRpOOvPfC4pB61UVW2uSwZNUp0QU/jCekTal1vMmbO0DgdHeLUJpv/ARmDqErVxA3Sg==}
     dependencies:
       css-select: 5.1.0
       he: 1.2.0
