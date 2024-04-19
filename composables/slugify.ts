@@ -1,4 +1,5 @@
 import defaultSlugify from 'slugify'
-export const slugify = (str: string) => {
+
+export function slugify(str: string) {
   return defaultSlugify(str, { replacement: '_', lower: true })
 }

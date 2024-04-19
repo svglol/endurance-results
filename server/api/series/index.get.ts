@@ -15,5 +15,5 @@ export default defineCachedEventHandler(
   {
     maxAge: 60,
     getKey: () => 'seriesdata',
-  }
+  },
 )

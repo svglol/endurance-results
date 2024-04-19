@@ -15,7 +15,8 @@ function buildLink() {
   const result = data.value?.find(({ name }) => name === deSlugify(series))
     ?.seasons[0].events[0].results[0].name
 
-  if (!series || !season || !event || !result) return '/'
+  if (!series || !season || !event || !result)
+    return '/'
   return `/${slugify(series)}/${slugify(season)}/${slugify(event)}/${slugify(result)}`
 }
 </script>

@@ -9,7 +9,8 @@
       base: 'mt-[4rem]',
       padding: 'p-0',
     }"
-    class="flex lg:hidden">
+    class="flex lg:hidden"
+  >
     <slot />
   </USlideover>
 </template>
@@ -17,6 +18,7 @@
 <script lang="ts" setup>
 const isOpen = useState('mobilemenu', () => false)
 </script>
+
 <style>
 html {
   padding-right: 0 !important ;

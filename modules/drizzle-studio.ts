@@ -6,9 +6,8 @@ export default defineNuxtModule({
     name: 'drizzle-studio',
   },
   setup(_options, nuxt) {
-    if (!nuxt.options.dev) {
+    if (!nuxt.options.dev)
       return
-    }
 
     startSubprocess(
       {
@@ -18,7 +17,7 @@ export default defineNuxtModule({
       {
         id: 'nuxt-drizzle-kit--studio',
         name: 'Drizzle Studio',
-      }
+      },
     )
 
     addCustomTab({

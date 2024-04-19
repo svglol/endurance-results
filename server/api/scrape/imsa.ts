@@ -9,7 +9,7 @@ export default upstashWrappedResponseHandler(async () => {
   const filteredResults = sortResultsToInsert(
     seriesData,
     allEventResults,
-    convertResultName
+    convertResultName,
   )
 
   // get csv data from fiawec
@@ -27,25 +27,25 @@ export default upstashWrappedResponseHandler(async () => {
               url: `http://results.imsa.com/${result}`,
               result: convertResultName(result),
               data: '',
-            }))
-        )
-      ).then(data => {
+            })),
+        ),
+      ).then((data) => {
         return {
           season: season.split('_')[1],
           event: event.split('_')[1],
           results: data,
         }
       })
-    })
+    }),
   )
 
   // insert csv data into db
   await insertData(data, seriesData)
 
   const updated = data.flatMap(d => d.results).filter(r => r.data !== '')
-  if (updated.length > 0) {
+  if (updated.length > 0)
     await clearStorage()
-  }
+
   return { updatedIMSA: updated.length }
 })
 
@@ -63,7 +63,7 @@ async function getSeasonsWithEvents() {
   const seasonsData = Promise.all(
     seasons.map(season =>
       $fetch<string>(`http://results.imsa.com/?season=${season}`)
-        .then(data => {
+        .then((data) => {
           return {
             data,
             season,
@@ -74,8 +74,8 @@ async function getSeasonsWithEvents() {
             data: '',
             season,
           }
-        })
-    )
+        }),
+    ),
   )
   for (const { data, season } of await seasonsData) {
     const page = parse(data)
@@ -98,18 +98,19 @@ async function getAllEventResults() {
       return Promise.all(
         events.map(event =>
           $fetch<string>(
-            `http://results.imsa.com/?season=${season}&evvent=${event}`
+            `http://results.imsa.com/?season=${season}&evvent=${event}`,
           )
             .then(data => ({ event, data }))
-            .catch(() => ({ event, data: '' }))
-        )
+            .catch(() => ({ event, data: '' })),
+        ),
       ).then(data => ({ season, events: data }))
-    })
+    }),
   )
   for (const { season, events } of data) {
     for (const event of events) {
       const eventResults = parseEventResults(season, event)
-      if (eventResults) allEventResults.push(eventResults)
+      if (eventResults)
+        allEventResults.push(eventResults)
     }
   }
 
@@ -118,7 +119,7 @@ async function getAllEventResults() {
 
 function parseEventResults(
   season: string,
-  event: { event: string; data: string }
+  event: { event: string, data: string },
 ) {
   const page = parse(event.data)
   let td = page.getElementsByTagName('table')
@@ -129,8 +130,8 @@ function parseEventResults(
       const links = t.getElementsByTagName('a').map(a => a.attributes.href)
       for (const link of links) {
         if (
-          String(link).includes('Results') &&
-          (String(link).includes('.csv') || String(link).includes('.CSV'))
+          String(link).includes('Results')
+          && (String(link).includes('.csv') || String(link).includes('.CSV'))
         ) {
           const substrings = [
             'Meteo',
@@ -145,18 +146,17 @@ function parseEventResults(
             'Combined',
           ]
           if (
-            !new RegExp(substrings.join('|')).test(String(link)) &&
-            !link.includes('_Weather')
-          ) {
+            !new RegExp(substrings.join('|')).test(String(link))
+            && !link.includes('_Weather')
+          )
             results.push(link)
-          }
         }
       }
     }
   }
-  if (results.length === 0) {
+  if (results.length === 0)
     return null
-  }
+
   return {
     season,
     event: event.event,
@@ -175,54 +175,61 @@ function convertResultName(input: string) {
       .replace('.CSV', '')
       .split('_')[2]
     resultName = `${classification} ${hour}`
-  } else if (
-    /03_Results.CSV/.test(input) ||
-    /05_Results.CSV/.test(input) ||
-    /05_Results%20by%20Hour.CS/.test(input)
+  }
+  else if (
+    /03_Results.CSV/.test(input)
+    || /05_Results.CSV/.test(input)
+    || /05_Results%20by%20Hour.CS/.test(input)
   ) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `${session}`
-  } else if (/03_Provisional%20Results.CSV/.test(input)) {
+  }
+  else if (/03_Provisional%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Provisional ${session}`
-  } else if (/03_Provisional%20REVISED%20Results.CSV/.test(input)) {
+  }
+  else if (/03_Provisional%20REVISED%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Provisional Revised ${session}`
-  } else if (/03_Official%20Results.CSV/.test(input)) {
+  }
+  else if (/03_Official%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Official ${session}`
-  } else if (/03_Unofficial%20Results.CSV/.test(input)) {
+  }
+  else if (/03_Unofficial%20Results.CSV/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Unofficial ${session}`
-  } else if (
-    /06_Combined%20Practice%20Results.CSV/.test(input) ||
-    /06_Combined%20Practice%20Results_Practice%203.CSV/.test(input) ||
-    /06_CombinedClassification_Combined%20Practice.CSV/.test(input) ||
-    /06_CombinedClassification_Combine%20Practice.CSV/.test(input) ||
-    /06_Combined%20Practice%20Results_Practice%2.CS/.test(input) ||
-    /06_Combined%20Practice%20Results_Practice%4.CSV/.test(input)
+  }
+  else if (
+    /06_Combined%20Practice%20Results.CSV/.test(input)
+    || /06_Combined%20Practice%20Results_Practice%203.CSV/.test(input)
+    || /06_CombinedClassification_Combined%20Practice.CSV/.test(input)
+    || /06_CombinedClassification_Combine%20Practice.CSV/.test(input)
+    || /06_Combined%20Practice%20Results_Practice%2.CS/.test(input)
+    || /06_Combined%20Practice%20Results_Practice%4.CSV/.test(input)
   ) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     resultName = `Combined ${session}`
-  } else if (
-    /00_Grid_Race_Unofficial.CSV/.test(input) ||
-    /01_Grid_Race_Unofficial.CSV/.test(input) ||
-    /00_Grid_Race_Official.CSV/.test(input) ||
-    /01_Grid_Race_Official.CSV/.test(input) ||
-    /00_Grid_Race_Provisional.CSV/.test(input) ||
-    /01_Grid_Race_Provisional.CSV/.test(input) ||
-    /00_Grid_Race_Provisional_Amended.CSV/.test(input) ||
-    /01_Grid_Race_Provisional_Amended.CSV/.test(input) ||
-    /00_Grid_Race_Official_Amended.CSV/.test(input) ||
-    /01_Grid_Race_Official_Amended.CSV/.test(input) ||
-    /00_Grid_Race_Official_Revised.CSV/.test(input) ||
-    /01_Grid_Race_Official_Revised.CSV/.test(input)
+  }
+  else if (
+    /00_Grid_Race_Unofficial.CSV/.test(input)
+    || /01_Grid_Race_Unofficial.CSV/.test(input)
+    || /00_Grid_Race_Official.CSV/.test(input)
+    || /01_Grid_Race_Official.CSV/.test(input)
+    || /00_Grid_Race_Provisional.CSV/.test(input)
+    || /01_Grid_Race_Provisional.CSV/.test(input)
+    || /00_Grid_Race_Provisional_Amended.CSV/.test(input)
+    || /01_Grid_Race_Provisional_Amended.CSV/.test(input)
+    || /00_Grid_Race_Official_Amended.CSV/.test(input)
+    || /01_Grid_Race_Official_Amended.CSV/.test(input)
+    || /00_Grid_Race_Official_Revised.CSV/.test(input)
+    || /01_Grid_Race_Official_Revised.CSV/.test(input)
   ) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
@@ -234,15 +241,17 @@ function convertResultName(input: string) {
     const amended = input.includes('Amended') ? 'Amended' : ''
     const revised = input.includes('Revised') ? 'Revised' : ''
     resultName = `Grid ${session} ${type} ${revised}${amended}`.trim()
-  } else if (/Hour%20/.test(input)) {
+  }
+  else if (/Hour%20/.test(input)) {
     const parts = input.split('/')
     const session = decodeURI(parts[4]).split('_')[1]
     let hour = decodeURI(parts[5]).replace('_', '')
-    if (!hour.startsWith('Hour')) {
+    if (!hour.startsWith('Hour'))
       hour = removeBeforeSequence(hour, 'Hour')
-    }
+
     resultName = `${session} ${hour}`
-  } else {
+  }
+  else {
     const parts = fileName.split('_')
     resultName = parts
       .slice(-2)
@@ -256,8 +265,8 @@ function convertResultName(input: string) {
 
 function removeBeforeSequence(input: string, sequence: string) {
   const index = input.indexOf(sequence)
-  if (index !== -1) {
+  if (index !== -1)
     return input.substring(index)
-  }
+
   return input
 }

@@ -20,14 +20,14 @@ export default defineCachedEventHandler(
           event.results.flatMap(result => ({
             loc: `/${createSlug(series.name)}/${createSlug(season.name)}/${createSlug(event.name)}/${createSlug(result.name)}`,
             _sitemap: 'pages',
-          }))
-        )
-      )
+          })),
+        ),
+      ),
     )
   },
   {
     maxAge: 60,
-  }
+  },
 )
 function createSlug(label: string) {
   return `${slugify(label, { replacement: '_', lower: true })}`

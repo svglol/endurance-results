@@ -3,7 +3,8 @@
     <div class="bg-zinc-900 h-full w-full rounded-3xl">
       <div
         v-if="title === ''"
-        class="flex flex-row items-center gap-4 relative mx-auto my-auto">
+        class="flex flex-row items-center gap-4 relative mx-auto my-auto"
+      >
         <span class="text-6xl text-center flex flex-row gap-1 justify-center">
           <UIcon name="twemoji:racing-car" />
           <UIcon name="twemoji:dashing-away" />
@@ -14,8 +15,9 @@
       </div>
       <div
         v-else
-        class="flex flex-col p-12 items-center justify-between relative my-auto h-full">
-        <div></div>
+        class="flex flex-col p-12 items-center justify-between relative my-auto h-full"
+      >
+        <div />
         <div>
           <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
             <template v-for="text in title?.split(' - ')" :key="text">
@@ -28,7 +30,8 @@
             v-if="
               description !== 'Get all endurance racing results in one place!'
             "
-            class="max-w-full text-3xl leading-tight text-white/90 mx-auto text-center">
+            class="max-w-full text-3xl leading-tight text-white/90 mx-auto text-center"
+          >
             {{ description }}
           </div>
         </div>
@@ -37,7 +40,9 @@
             <UIcon name="twemoji:racing-car" />
             <UIcon name="twemoji:dashing-away" />
           </span>
-          <h1 class="text-4xl font-light text-white">Endurance Results</h1>
+          <h1 class="text-4xl font-light text-white">
+            Endurance Results
+          </h1>
         </div>
       </div>
     </div>
@@ -50,7 +55,7 @@ defineOptions({
 })
 
 $defineProps<{
-  title?: String
-  description?: String
+  title?: string
+  description?: string
 }>()
 </script>

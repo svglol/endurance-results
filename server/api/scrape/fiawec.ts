@@ -9,7 +9,7 @@ export default upstashWrappedResponseHandler(async () => {
   const filteredResults = sortResultsToInsert(
     seriesData,
     allEventResults,
-    convertResultName
+    convertResultName,
   )
 
   // get csv data from fiawec
@@ -27,23 +27,23 @@ export default upstashWrappedResponseHandler(async () => {
               url: `http://fiawec.alkamelsystems.com/${result}`,
               result: convertResultName(result),
               data: '',
-            }))
-        )
+            })),
+        ),
       ).then(data => ({
         season: season.split('_')[1],
         event: event.split('_')[1],
         results: data,
       }))
-    })
+    }),
   )
 
   // insert csv data into db
   await insertData(data, seriesData)
 
   const updated = data.flatMap(d => d.results).filter(r => r.data !== '')
-  if (updated.length > 0) {
+  if (updated.length > 0)
     await clearStorage()
-  }
+
   return { updatedFIAWEC: updated.length }
 })
 
@@ -61,7 +61,7 @@ async function getSeasonsWithEvents() {
   const seasonsData = Promise.all(
     seasons.map(season =>
       $fetch<string>(`http://fiawec.alkamelsystems.com/?season=${season}`)
-        .then(data => {
+        .then((data) => {
           return {
             data,
             season,
@@ -72,8 +72,8 @@ async function getSeasonsWithEvents() {
             data: '',
             season,
           }
-        })
-    )
+        }),
+    ),
   )
   for (const { data, season } of await seasonsData) {
     const page = parse(data)
@@ -96,18 +96,19 @@ async function getAllEventResults() {
       return Promise.all(
         events.map(event =>
           $fetch<string>(
-            `http://fiawec.alkamelsystems.com/?season=${season}&evvent=${event}`
+            `http://fiawec.alkamelsystems.com/?season=${season}&evvent=${event}`,
           )
             .then(data => ({ event, data }))
-            .catch(() => ({ event, data: '' }))
-        )
+            .catch(() => ({ event, data: '' })),
+        ),
       ).then(data => ({ season, events: data }))
-    })
+    }),
   )
   for (const { season, events } of data) {
     for (const event of events) {
       const eventResults = parseEventResults(season, event)
-      if (eventResults) allEventResults.push(eventResults)
+      if (eventResults)
+        allEventResults.push(eventResults)
     }
   }
 
@@ -116,7 +117,7 @@ async function getAllEventResults() {
 
 function parseEventResults(
   season: string,
-  event: { event: string; data: string }
+  event: { event: string, data: string },
 ) {
   const page = parse(event.data)
   let td = page.getElementsByTagName('table')
@@ -124,27 +125,26 @@ function parseEventResults(
   const results = []
   for (const t of td) {
     if (
-      (t.text.includes('FIA WEC') && !t.text.includes('ROOKIE TEST')) ||
-      t.text.includes('24 HEURES DU MANS') ||
-      t.text.includes('PROLOGUE')
+      (t.text.includes('FIA WEC') && !t.text.includes('ROOKIE TEST'))
+      || t.text.includes('24 HEURES DU MANS')
+      || t.text.includes('PROLOGUE')
     ) {
       const links = t.getElementsByTagName('a').map(a => a.attributes.href)
       for (const link of links) {
         if (
-          String(link).includes('Results') &&
-          (String(link).includes('.csv') || String(link).includes('.CSV'))
+          String(link).includes('Results')
+          && (String(link).includes('.csv') || String(link).includes('.CSV'))
         ) {
           const substrings = ['Meteo', 'Analysis', 'Analsysis', 'Weather']
-          if (!new RegExp(substrings.join('|')).test(String(link))) {
+          if (!new RegExp(substrings.join('|')).test(String(link)))
             results.push(link)
-          }
         }
       }
     }
   }
-  if (results.length === 0) {
+  if (results.length === 0)
     return null
-  }
+
   return {
     season,
     event: event.event,

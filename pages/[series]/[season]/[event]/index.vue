@@ -14,7 +14,8 @@ function buildLink() {
     ?.events.find(({ name }) => name.toUpperCase() === deSlugify(event))
     ?.results[0].name
 
-  if (!series || !season || !event || !result) return '/'
+  if (!series || !season || !event || !result)
+    return '/'
   return `/${slugify(series)}/${slugify(season)}/${slugify(event)}/${slugify(result)}`
 }
 </script>

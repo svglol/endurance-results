@@ -4,7 +4,8 @@
     variant="ghost"
     aria-label="Download"
     :to="`${url}`"
-    color="primary" />
+    color="primary"
+  />
 </template>
 
 <script lang="ts" setup>

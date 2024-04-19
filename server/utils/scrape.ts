@@ -20,7 +20,7 @@ export async function getSeriesData(seriesName: string) {
 export function sortResultsToInsert(
   seriesData: SeriesData | undefined,
   allEventResults: AllEventResults[],
-  convertResultName: (name: string) => string
+  convertResultName: (name: string) => string,
 ) {
   const allowedResults = [] as string[]
   for (const results of allEventResults) {
@@ -33,15 +33,14 @@ export function sortResultsToInsert(
         seriesData?.seasons
           .find(s => s.name === results.season.split('_')[1])
           ?.events.find(e => e.name === results.event.split('_')[1])
-          ?.results.filter(r => r.name === convertResultName(result)).length ===
-          0 ||
-        eventNotFound
-      ) {
+          ?.results.filter(r => r.name === convertResultName(result)).length
+          === 0
+          || eventNotFound
+      )
         allowedResults.push(result)
-      }
     }
   }
-  const filteredResults = allEventResults.map(eventResult => {
+  const filteredResults = allEventResults.map((eventResult) => {
     return {
       ...eventResult,
       results: eventResult.results.filter(r => allowedResults.includes(r)),
@@ -52,7 +51,7 @@ export function sortResultsToInsert(
 
 export async function insertData(
   data: InsertData[],
-  seriesData: SeriesData | undefined
+  seriesData: SeriesData | undefined,
 ) {
   // create all missing seasons
   const seasonsNotExist = data
@@ -71,7 +70,7 @@ export async function insertData(
       .values(seasonsNotExist)
       .returning()
 
-    insertedSeasons.forEach(season => {
+    insertedSeasons.forEach((season) => {
       seriesData?.seasons.push({ ...season, events: [] })
     })
   }
@@ -97,7 +96,7 @@ export async function insertData(
       .values(eventsNotExist)
       .returning()
 
-    insertedEvents.forEach(event => {
+    insertedEvents.forEach((event) => {
       seriesData?.seasons
         .filter(s => s.id === event.seasonId)[0]
         .events.push({ ...event, results: [] })
@@ -106,7 +105,7 @@ export async function insertData(
 
   // create all results
   const resultsToInsert = data.flatMap(({ season, event, results }) => {
-    return results.map(result => {
+    return results.map((result) => {
       return {
         name: result.result,
         url: result.url,
@@ -117,9 +116,8 @@ export async function insertData(
       }
     })
   })
-  if (resultsToInsert.length > 0) {
+  if (resultsToInsert.length > 0)
     await useDB().insert(tables.result).values(resultsToInsert)
-  }
 }
 
 export function minifyCsv(csv: string) {
@@ -161,10 +159,10 @@ export function minifyCsv(csv: string) {
         ]
         const regex = new RegExp(substrings.join('|'))
         if (
-          regex.test(headers[j]) ||
-          data[j] === '' ||
-          data[j] === null ||
-          data[j] === undefined
+          regex.test(headers[j])
+          || data[j] === ''
+          || data[j] === null
+          || data[j] === undefined
         ) {
           obj[headers[j]] = null
           continue
@@ -197,28 +195,28 @@ export function minifyCsv(csv: string) {
             obj[headers[j].replace('FIRSTNAME', '')] = data[j]
               .replace('FIRSTNAME', '')
               .replace(/([A-Z])(\d)/g, '$1 $2')
-          } else {
-            obj[headers[j].replace('FIRSTNAME', '')] =
-              data[j] + ' ' + data[j + 1]
           }
-        } else {
+          else {
+            obj[headers[j].replace('FIRSTNAME', '')]
+              = `${data[j]} ${data[j + 1]}`
+          }
+        }
+        else {
           obj[headers[j]] = data[j]
         }
       }
       lines.push(obj)
     }
   }
-  if (lines === undefined || lines.length === 0 || lines === null) {
+  if (lines === undefined || lines.length === 0 || lines === null)
     return csv
-  }
 
   let keys = Object.keys(lines[0])
   // if a column is empty, remove it and remove it from all lines
   for (let i = 0; i < keys.length; i++) {
     if (lines[0][keys[i]] === null) {
-      for (let j = 0; j < lines.length; j++) {
+      for (let j = 0; j < lines.length; j++)
         delete lines[j][keys[i]]
-      }
     }
   }
 
@@ -233,18 +231,16 @@ export function minifyCsv(csv: string) {
       }
     }
     if (!hasValue) {
-      for (let j = 0; j < lines.length; j++) {
+      for (let j = 0; j < lines.length; j++)
         delete lines[j][keys[i]]
-      }
     }
   }
 
   // check if all objects have the same keys
   keys = Object.keys(lines[0])
   for (let i = 0; i < lines.length; i++) {
-    if (keys.length !== Object.keys(lines[i]).length) {
+    if (keys.length !== Object.keys(lines[i]).length)
       return csv
-    }
   }
 
   // turn object back into csv
@@ -252,35 +248,34 @@ export function minifyCsv(csv: string) {
   lines.splice(0, 1)
   const updatedLines = lines.reduce(
     (acc, val) => acc.concat(Object.values(val).join(`;`)),
-    []
+    [],
   )
   const minifiedCsv = topLine.concat(`\n${updatedLines.join(`\n`)}`)
   return minifiedCsv
 }
 
-export const upstashWrappedResponseHandler = <T extends EventHandlerRequest, D>(
-  handler: EventHandler<T, D>
-): EventHandler<T, D> =>
-  defineEventHandler<T>(async event => {
+export function upstashWrappedResponseHandler<T extends EventHandlerRequest, D>(handler: EventHandler<T, D>): EventHandler<T, D> {
+  return defineEventHandler<T>(async (event) => {
     if (process.env.NODE_ENV !== 'development') {
       const signature = getHeader(event, 'upstash-signature')
-      if (!signature) {
+      if (!signature)
         return createError({ statusCode: 401, statusMessage: 'Unauthorized' })
-      }
+
       const r = new Receiver({
         currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY as string,
         nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY as string,
       })
       const isValid = await r.verify({ signature, body: '' })
-      if (!isValid) {
+      if (!isValid)
         return createError({ statusCode: 401, statusMessage: 'Unauthorized' })
-      }
     }
     try {
       const response = await handler(event)
       return { response }
-    } catch (err) {
+    }
+    catch (err) {
       // Error handling
       return { err }
     }
   })
+}

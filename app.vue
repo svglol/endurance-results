@@ -4,18 +4,21 @@
     <NuxtLoadingIndicator
       :duration="1000"
       :color="false"
-      class="bg-orange-500" />
+      class="bg-orange-500"
+    />
     <NuxtLayout
-      class="bg-gray-100 font-sans text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400">
+      class="bg-gray-100 font-sans text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400"
+    >
       <NuxtPage />
       <UNotifications />
     </NuxtLayout>
   </div>
 </template>
+
 <script setup lang="ts">
 const colorMode = useColorMode()
 useHead({
-  titleTemplate: titleChunk => {
+  titleTemplate: (titleChunk) => {
     return titleChunk
       ? `${titleChunk} - Endurance Results`
       : 'Endurance Results'

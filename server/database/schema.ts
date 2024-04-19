@@ -1,10 +1,11 @@
+/* eslint-disable ts/no-use-before-define */
 import { relations } from 'drizzle-orm'
 import {
-  text,
-  sqliteTable,
   blob,
   index,
   integer,
+  sqliteTable,
+  text,
 } from 'drizzle-orm/sqlite-core'
 
 export const series = sqliteTable(
@@ -13,11 +14,11 @@ export const series = sqliteTable(
     id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
   },
-  table => {
+  (table) => {
     return {
       nameIdx: index('series_name_idx').on(table.name),
     }
-  }
+  },
 )
 
 export const seriesRelations = relations(series, ({ many }) => ({
@@ -33,12 +34,12 @@ export const season = sqliteTable(
       onDelete: 'cascade',
     }),
   },
-  table => {
+  (table) => {
     return {
       seriesIdIdx: index('seasons_series_id_idx').on(table.seriesId),
       nameIdx: index('seasons_name_idx').on(table.name),
     }
-  }
+  },
 )
 
 export const seasonRelations = relations(season, ({ many, one }) => ({
@@ -58,12 +59,12 @@ export const event = sqliteTable(
       onDelete: 'cascade',
     }),
   },
-  table => {
+  (table) => {
     return {
       seasonIdIdx: index('events_season_id_idx').on(table.seasonId),
       nameIdx: index('events_name_idx').on(table.name),
     }
-  }
+  },
 )
 
 export const eventRelations = relations(event, ({ many, one }) => ({
@@ -85,12 +86,12 @@ export const result = sqliteTable(
     }),
     value: blob('value').notNull(),
   },
-  table => {
+  (table) => {
     return {
       eventIdIdx: index('results_event_id_idx').on(table.eventId),
       nameIdx: index('results_name_idx').on(table.name),
     }
-  }
+  },
 )
 
 export const resultRelation = relations(result, ({ one }) => ({

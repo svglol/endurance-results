@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@nuxt/fonts',
     '@nuxthub/core',
+    '@nuxt/eslint',
   ],
   hub: {
     database: true,

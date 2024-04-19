@@ -5,7 +5,8 @@
       color="gray"
       variant="ghost"
       aria-label="Search"
-      @click="isOpen = true" />
+      @click="isOpen = true"
+    />
   </UTooltip>
   <UModal v-model="isOpen">
     <UCommandPalette
@@ -16,7 +17,8 @@
         fuseOptions: { keys: ['title', 'category'] },
       }"
       selected-icon=""
-      @update:model-value="onSelect">
+      @update:model-value="onSelect"
+    >
       <template #empty-state>
         <div />
       </template>
@@ -37,9 +39,8 @@ const groups = [
     key: 'pages',
     label: (q: string) => q && `Pages matching “${q}”...`,
     search: async (q: string) => {
-      if (!q) {
+      if (!q)
         return []
-      }
 
       const pages = (await $fetch('/api/search', { params: { q } })) as {
         label: string
@@ -58,7 +59,8 @@ defineShortcuts({
   meta_k: {
     usingInput: true,
     handler: () => {
-      if (disableShortcut.value) return
+      if (disableShortcut.value)
+        return
       isOpen.value = !isOpen.value
     },
   },
@@ -66,7 +68,8 @@ defineShortcuts({
     usingInput: true,
     whenever: [isOpen],
     handler: () => {
-      if (disableShortcut.value) return
+      if (disableShortcut.value)
+        return
       isOpen.value = false
     },
   },

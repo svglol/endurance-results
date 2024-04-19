@@ -4,7 +4,8 @@
     variant="ghost"
     aria-label="Share"
     color="primary"
-    @click="startShare" />
+    @click="startShare"
+  />
 </template>
 
 <script lang="ts" setup>

@@ -1,18 +1,21 @@
 <template>
   <aside
-    class="overflow-y-auto lg:block lg:max-h-screen lg:sticky py-4 lg:px-4 lg:top-0 lg:h-screen">
+    class="overflow-y-auto lg:block lg:max-h-screen lg:sticky py-4 lg:px-4 lg:top-0 lg:h-screen"
+  >
     <div class="flex flex-col gap-2 justify-between w-full">
       <div class="hidden relative lg:flex flex-col gap-0 justify-between">
         <NuxtLink
           to="/"
           class="flex flex-col gap-1"
-          @click="toggleMobileMenu = false">
+          @click="toggleMobileMenu = false"
+        >
           <span class="text-3xl text-center flex flex-row gap-1 justify-center">
             <UIcon name="twemoji:racing-car" />
             <UIcon name="twemoji:dashing-away" />
           </span>
           <span
-            class="text-2xl font-light text-center dark:text-white text-black">
+            class="text-2xl font-light text-center dark:text-white text-black"
+          >
             Endurance Results
           </span>
         </NuxtLink>
@@ -38,7 +41,8 @@
             color="white"
             variant="ghost"
             size="md"
-            :items="accordionItems">
+            :items="accordionItems"
+          >
             <template #default="{ item, open }">
               <UButton
                 color="white"
@@ -46,13 +50,15 @@
                 :ui="{
                   rounded: 'rounded-none',
                   padding: { sm: 'p-0 pl-1' },
-                }">
+                }"
+              >
                 {{ item.label }}
                 <template #trailing>
                   <UIcon
                     name="i-heroicons-chevron-right-20-solid"
                     class="w-5 h-5 ms-auto transform transition-transform duration-200"
-                    :class="[open && 'rotate-90']" />
+                    :class="[open && 'rotate-90']"
+                  />
                 </template>
               </UButton>
             </template>
@@ -66,7 +72,8 @@
                   active-class="text-primary border-primary"
                   inactive-class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-gray-200 dark:border-gray-800"
                   :to="createSlug(label)"
-                  @click="toggleMobileMenu = false">
+                  @click="toggleMobileMenu = false"
+                >
                   {{ label }}
                 </ULink>
               </div>
@@ -87,6 +94,12 @@ const { data } = $defineProps<{
 }>()
 const toggleMobileMenu = useState('mobilemenu', () => false)
 
+const {
+  series: seriesParam,
+  season: seasonParam,
+  event: eventParam,
+} = useRoute('series-season-event-result').params
+
 const series = computed(() => {
   return (
     data?.map(({ name, id }) => {
@@ -95,6 +108,11 @@ const series = computed(() => {
   )
 })
 
+const selectedSeries = ref(
+  series.value.find(({ label }) => label === deSlugify(seriesParam))
+  ?? series.value[0],
+)
+
 const seasons = computed(() => {
   return (
     data
@@ -102,17 +120,22 @@ const seasons = computed(() => {
       .flatMap(({ seasons }) =>
         seasons.map(({ name, id }) => {
           return { label: name, value: id }
-        })
+        }),
       ) ?? []
   )
 })
+
+const selectedSeason = ref(
+  seasons.value.find(({ label }) => label === deSlugify(seasonParam))
+  ?? seasons.value[seasons.value.length - 1],
+)
 
 const events = computed(() => {
   return (
     data
       ?.filter(({ id }) => id === selectedSeries.value.value)
       .flatMap(({ seasons }) =>
-        seasons.filter(({ id }) => id === selectedSeason.value.value)
+        seasons.filter(({ id }) => id === selectedSeason.value.value),
       )
       .flatMap(({ events }) => events)
       .map(({ name, id }) => {
@@ -121,15 +144,21 @@ const events = computed(() => {
   )
 })
 
+const selectedEvent = ref(
+  events.value.find(
+    ({ label }) => label.toUpperCase() === deSlugify(eventParam),
+  ) ?? events.value[events.value.length - 1],
+)
+
 const results = computed(() => {
   return (
     data
       ?.filter(({ id }) => id === selectedSeries.value.value)
       .flatMap(({ seasons }) =>
-        seasons.filter(({ id }) => id === selectedSeason.value.value)
+        seasons.filter(({ id }) => id === selectedSeason.value.value),
       )
       .flatMap(({ events }) =>
-        events.filter(({ id }) => id === selectedEvent.value.value)
+        events.filter(({ id }) => id === selectedEvent.value.value),
       )
       .flatMap(({ results }) => results)
       .map(({ name, id }) => {
@@ -149,10 +178,10 @@ const practiceResults = computed(() => {
   const regex = new RegExp(substrings.join('|'))
   return results.value.filter(
     ({ label }) =>
-      regex.test(label) &&
-      !testingResults.value.find(
-        ({ label: practiceLabel }) => practiceLabel === label
-      )
+      regex.test(label)
+      && !testingResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label,
+      ),
   )
 })
 
@@ -162,13 +191,13 @@ const qualifyingResults = computed(() => {
   // Exclude labels already matched by practiceResults
   return results.value.filter(
     ({ label }) =>
-      regex.test(label) &&
-      !practiceResults.value.find(
-        ({ label: practiceLabel }) => practiceLabel === label
-      ) &&
-      !testingResults.value.find(
-        ({ label: practiceLabel }) => practiceLabel === label
+      regex.test(label)
+      && !practiceResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label,
       )
+      && !testingResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label,
+      ),
   )
 })
 
@@ -178,16 +207,16 @@ const warmupResults = computed(() => {
   // Exclude labels already matched by practiceResults and qualifyingResults
   return results.value.filter(
     ({ label }) =>
-      regex.test(label) &&
-      !practiceResults.value.find(
-        ({ label: practiceLabel }) => practiceLabel === label
-      ) &&
-      !qualifyingResults.value.find(
-        ({ label: qualifyingLabel }) => qualifyingLabel === label
-      ) &&
-      !testingResults.value.find(
-        ({ label: practiceLabel }) => practiceLabel === label
+      regex.test(label)
+      && !practiceResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label,
       )
+      && !qualifyingResults.value.find(
+        ({ label: qualifyingLabel }) => qualifyingLabel === label,
+      )
+      && !testingResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label,
+      ),
   )
 })
 
@@ -197,19 +226,19 @@ const raceResults = computed(() => {
   // Exclude labels already matched by practiceResults, qualifyingResults, and warmupResults
   return results.value.filter(
     ({ label }) =>
-      regex.test(label) &&
-      !practiceResults.value.find(
-        ({ label: practiceLabel }) => practiceLabel === label
-      ) &&
-      !qualifyingResults.value.find(
-        ({ label: qualifyingLabel }) => qualifyingLabel === label
-      ) &&
-      !warmupResults.value.find(
-        ({ label: warmupLabel }) => warmupLabel === label
-      ) &&
-      !testingResults.value.find(
-        ({ label: practiceLabel }) => practiceLabel === label
+      regex.test(label)
+      && !practiceResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label,
       )
+      && !qualifyingResults.value.find(
+        ({ label: qualifyingLabel }) => qualifyingLabel === label,
+      )
+      && !warmupResults.value.find(
+        ({ label: warmupLabel }) => warmupLabel === label,
+      )
+      && !testingResults.value.find(
+        ({ label: practiceLabel }) => practiceLabel === label,
+      ),
   )
 })
 
@@ -217,27 +246,27 @@ const otherResults = computed(() => {
   // results that arent caught
   return results.value
     .filter(
-      ({ label }) => !raceResults.value.some(({ label: l }) => l === label)
+      ({ label }) => !raceResults.value.some(({ label: l }) => l === label),
     )
     .filter(
       ({ label }) =>
-        !qualifyingResults.value.some(({ label: l }) => l === label)
+        !qualifyingResults.value.some(({ label: l }) => l === label),
     )
     .filter(
-      ({ label }) => !warmupResults.value.some(({ label: l }) => l === label)
+      ({ label }) => !warmupResults.value.some(({ label: l }) => l === label),
     )
     .filter(
-      ({ label }) => !practiceResults.value.some(({ label: l }) => l === label)
+      ({ label }) => !practiceResults.value.some(({ label: l }) => l === label),
     )
     .filter(
-      ({ label }) => !testingResults.value.some(({ label: l }) => l === label)
+      ({ label }) => !testingResults.value.some(({ label: l }) => l === label),
     )
 })
 
 const accordionItems = computed(() => {
   const items = [] as {
     label: string
-    items?: { label: string; value: string }[]
+    items?: { label: string, value: string }[]
   }[]
   if (testingResults.value.length > 0) {
     items.push({
@@ -278,36 +307,16 @@ const accordionItems = computed(() => {
   return items
 })
 
-const {
-  series: seriesParam,
-  season: seasonParam,
-  event: eventParam,
-} = useRoute('series-season-event-result').params
-
-const selectedSeries = ref(
-  series.value.find(({ label }) => label === deSlugify(seriesParam)) ??
-    series.value[0]
-)
-const selectedSeason = ref(
-  seasons.value.find(({ label }) => label === deSlugify(seasonParam)) ??
-    seasons.value[seasons.value.length - 1]
-)
-const selectedEvent = ref(
-  events.value.find(
-    ({ label }) => label.toUpperCase() === deSlugify(eventParam)
-  ) ?? events.value[events.value.length - 1]
-)
+let updateRoute = false
 
 watch(selectedSeries, () => {
-  if (!updateRoute) {
+  if (!updateRoute)
     selectedSeason.value = seasons.value[seasons.value.length - 1]
-  }
 })
 
 watch(selectedSeason, () => {
-  if (!updateRoute) {
+  if (!updateRoute)
     selectedEvent.value = events.value[events.value.length - 1]
-  }
 })
 
 watch(selectedEvent, () => {
@@ -319,32 +328,31 @@ watch(selectedEvent, () => {
 })
 
 const route = useRoute('series-season-event-result')
-let updateRoute = false
 watch(
   () => route.params,
   async () => {
     updateRoute = true
     if (route.params.series) {
-      selectedSeries.value =
-        series.value.find(
-          ({ label }) => label === deSlugify(route.params.series)
+      selectedSeries.value
+        = series.value.find(
+          ({ label }) => label === deSlugify(route.params.series),
         ) ?? series.value[0]
     }
     if (route.params.season) {
-      selectedSeason.value =
-        seasons.value.find(
-          ({ label }) => label === deSlugify(route.params.season)
+      selectedSeason.value
+        = seasons.value.find(
+          ({ label }) => label === deSlugify(route.params.season),
         ) ?? seasons.value[seasons.value.length - 1]
     }
     if (route.params.event) {
-      selectedEvent.value =
-        events.value.find(
-          ({ label }) => label.toUpperCase() === deSlugify(route.params.event)
+      selectedEvent.value
+        = events.value.find(
+          ({ label }) => label.toUpperCase() === deSlugify(route.params.event),
         ) ?? events.value[events.value.length - 1]
     }
     await promiseTimeout(1000)
     updateRoute = false
-  }
+  },
 )
 
 function createSlug(label: string) {
