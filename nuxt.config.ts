@@ -9,7 +9,12 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxtjs/seo',
     '@nuxt/fonts',
+    '@nuxthub/core',
   ],
+  hub: {
+    database: true,
+    cache: true,
+  },
   devtools: { enabled: true },
   experimental: {
     componentIslands: true,
@@ -90,31 +95,17 @@ export default defineNuxtConfig({
     cacheMaxAgeSeconds: 3600,
     runtimeCacheStorage: {
       driver: 'cloudflareKVBinding',
-      binding: 'SITEMAP_CACHE',
+      binding: 'CACHE',
     },
   },
   ogImage: {
     fonts: ['Noto+Sans:400', 'Noto+Sans:700'],
     runtimeCacheStorage: {
       driver: 'cloudflareKVBinding',
-      binding: 'OG_IMAGE_CACHE',
+      binding: 'CACHE',
     },
     defaults: {
       cacheMaxAgeSeconds: 60 * 60 * 24 * 7 * 1000, // 7 days
-    },
-  },
-  nitro: {
-    storage: {
-      cache: {
-        driver: 'cloudflareKVBinding',
-        binding: 'STORAGE',
-      },
-    },
-    devStorage: {
-      cache: {
-        driver: 'fs',
-        base: './.data/',
-      },
     },
   },
 })

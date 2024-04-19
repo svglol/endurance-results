@@ -1,44 +1,10 @@
-import { drizzle as drizzleD1, DrizzleD1Database } from 'drizzle-orm/d1'
-import { createClient as createLibSQLClient } from '@libsql/client/http'
-import { createClient as createLibSQLClientLocal } from '@libsql/client'
-import { drizzle as drizzleLibSQL, LibSQLDatabase } from 'drizzle-orm/libsql'
-// @ts-ignore
-import { join } from 'pathe'
-import * as schema from '~/server/database/schema'
+import { drizzle } from 'drizzle-orm/d1'
 
-export * as tables from '~/server/database/schema'
+import * as schema from '../database/schema'
+export { sql, eq, and, or } from 'drizzle-orm'
 
-let _db:
-  | DrizzleD1Database<typeof schema>
-  | LibSQLDatabase<typeof schema>
-  | null = null
+export const tables = schema
 
-export const useDB = () => {
-  if (!_db) {
-    if (process.env.TURSO_DB_URL && process.env.TURSO_DB_TOKEN) {
-      // Turso in production
-      _db = drizzleLibSQL(
-        createLibSQLClient({
-          url: process.env.TURSO_DB_URL,
-          authToken: process.env.TURSO_DB_TOKEN,
-        }),
-        { schema }
-      )
-    } else if (process.env.DB) {
-      // d1 in production
-      _db = drizzleD1(process.env.DB, { schema })
-    } else if (process.dev) {
-      // local sqlite in development
-      _db = drizzleLibSQL(
-        createLibSQLClientLocal({
-          url: 'file:' + join(process.cwd(), '.data/db.sqlite'),
-          authToken: '...',
-        }),
-        { schema }
-      )
-    } else {
-      throw new Error('No database configured for production')
-    }
-  }
-  return _db
+export function useDB() {
+  return drizzle(hubDatabase(), { schema })
 }
