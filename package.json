@@ -37,7 +37,7 @@
     "@upstash/qstash": "^2.3.0",
     "@vite-pwa/nuxt": "0.6.0",
     "@vue-macros/nuxt": "1.9.30",
-    "@vue/test-utils": "2.4.5",
+    "@vue/test-utils": "2.4.6",
     "@vueuse/core": "10.9.0",
     "@vueuse/nuxt": "10.9.0",
     "drizzle-kit": "0.20.14",
