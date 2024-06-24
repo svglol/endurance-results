@@ -48,7 +48,7 @@
     "lint-staged": "15.2.2",
     "node-html-parser": "6.1.13",
     "nuxt": "3.11.2",
-    "postcss-html": "1.6.0",
+    "postcss-html": "1.7.0",
     "prettier": "3.2.5",
     "simple-git-hooks": "2.11.1",
     "slugify": "1.6.6",
