@@ -35,7 +35,7 @@
     "@typescript-eslint/eslint-plugin": "7.7.0",
     "@typescript-eslint/parser": "7.7.0",
     "@upstash/qstash": "^2.3.0",
-    "@vite-pwa/nuxt": "0.6.0",
+    "@vite-pwa/nuxt": "0.10.5",
     "@vue-macros/nuxt": "1.9.30",
     "@vue/test-utils": "2.4.5",
     "@vueuse/core": "10.9.0",
